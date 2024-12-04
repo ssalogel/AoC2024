@@ -1,0 +1,93 @@
+from typing import Union
+
+from utils import Day
+
+def transpose(grid: list[str]) -> list[str]:
+    return [''.join([grid[j][i] for j in range(len(grid))]) for i in range(len(grid))]
+
+def get_diags(grid: list[str]) -> list[str]:
+    diags = []
+    assert(len(grid) == len(grid[0]))
+    #\ diagonals
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            pass
+
+    #/ diagonals
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            pass
+
+    return diags
+
+def search_diag(grid: list[str], y, x, target) -> int:
+    def search_dir(dy, dx):
+        word = ''
+        for i in range(len(target)):
+            look_x, look_y = x + dx*i, y + dy*i
+            if not (0 <= look_y < len(grid) and 0 <= look_x < len(grid[0])):
+                return 0
+            word += grid[look_y][look_x]
+            if not target.startswith(word):
+                return 0
+            if word == target:
+                return 1
+        return 0
+    dirs = (-1, -1), (-1, 1), (1, 1), (1, -1)
+    return sum(search_dir(dy, dx) for dx, dy in dirs)
+
+def part_one(data: list[str]) -> Union[str, int]:
+    total = 0
+    for elem in data + transpose(data):
+        total += elem.count("XMAS")
+        total += elem.count("SAMX")
+    for y in range(len(data)):
+        for x in range(len(data)):
+            if data[y][x] == 'X':
+                total += search_diag(data, y, x, "XMAS")
+    return total
+
+def part_two(data: list[str]) -> Union[str, int]:
+    total = 0
+    for y in range(1, len(data)-1):
+        for x in range(1, len(data)-1):
+            if data[y][x] == 'A':
+                if (((data[y-1][x-1] == 'S' and data[y+1][x+1] == 'M')
+                        or (data[y-1][x-1] == 'M' and data[y+1][x+1] == 'S'))
+                    and ((data[y+1][x-1] == 'S' and data[y-1][x+1] == 'M')
+                         or (data[y+1][x-1] == 'M' and data[y-1][x+1] == 'S'))):
+                    total += 1
+    return total
+
+
+def main():
+    test_case_1 = """12X345
+6SAMX7
+8A9ZAY
+XMASWS
+VXUTRQ"""
+
+    test_case_2 = """MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX"""
+
+    test = False
+    day = 4
+    if test:
+        data = test_case_2.strip().split("\n")
+    else:
+        data = Day.get_data(day).strip().split("\n")
+
+
+    print(f"day {day} part 1: {part_one(data)}")
+    print(f"day {day} part 2: {part_two(data)}")
+
+
+main()
