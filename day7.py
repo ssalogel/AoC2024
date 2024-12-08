@@ -1,12 +1,7 @@
 from typing import Union, Callable
-from operator import add, mul
-from functools import reduce
-from itertools import product
 from math import log10, floor
 from utils import Day
 
-def conc(x, y):
-    return int(str(x) + str(y))
 
 def split(number, target) -> tuple[bool, int]:
     length = floor(log10(target)) + 1
