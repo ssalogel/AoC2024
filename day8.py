@@ -2,9 +2,9 @@ from typing import Union
 from itertools import combinations
 from utils import Day
 
-def to_grid(data: list[str]) -> dict[str, list[tuple[int, int]]]:
+def to_grid(data: list[str]) -> dict[str, list[complex]]:
     d = {}
-    for char, pos in [(c, (x, y)) for y, line in enumerate(data) for x,c in enumerate(line)]:
+    for char, pos in [(c, x + 1j*y) for y, line in enumerate(reversed(data)) for x,c in enumerate(line)]:
         if char == '.':
             continue
         if char in d:
@@ -13,9 +13,6 @@ def to_grid(data: list[str]) -> dict[str, list[tuple[int, int]]]:
             d[char] = [pos]
     return d
 
-def get_distance(pos1: tuple[int, int], pos2: tuple[int, int]) -> tuple[int, int]:
-    return pos1[0] - pos2[0], pos1[1] - pos2[1]
-
 def part_one(data: list[str]) -> Union[str, int]:
     width = len(data)
     heigth = len(data[0])
@@ -23,12 +20,12 @@ def part_one(data: list[str]) -> Union[str, int]:
     for char, positions in to_grid(data).items():
         for pair in combinations(positions, 2):
             el1, el2 = pair
-            dist = get_distance(el1, el2)
-            n1 = (el1[0] + dist[0], el1[1] + dist[1])
-            if 0 <= n1[0] < width and 0 <= n1[1] < heigth:
+            dist = el1 - el2
+            n1 = el1 + dist
+            if 0 <= n1.real < width and 0 <= n1.imag < heigth:
                 antinodes.add(n1)
-            n2 = (el2[0] - dist[0], el2[1] - dist[1])
-            if 0 <= n2[0] < width and 0 <= n2[1] < heigth:
+            n2 = el2 - dist
+            if 0 <= n2.real < width and 0 <= n2.imag < heigth:
                 antinodes.add(n2)
     return len(antinodes)
 
@@ -41,15 +38,15 @@ def part_two(data: list[str]) -> Union[str, int]:
             el1, el2 = pair
             antinodes.add(el1)
             antinodes.add(el2)
-            dist = get_distance(el1, el2)
-            nf = (el1[0] + dist[0], el1[1] + dist[1])
-            while 0 <= nf[0] < width and 0 <= nf[1] < heigth:
+            dist = el1 - el2
+            nf = el1 + dist
+            while 0 <= nf.real < width and 0 <= nf.imag < heigth:
                 antinodes.add(nf)
-                nf = (nf[0] + dist[0], nf[1] + dist[1])
-            nb = (el2[0] - dist[0], el2[1] - dist[1])
-            while 0 <= nb[0] < width and 0 <= nb[1] < heigth:
+                nf = nf + dist
+            nb = el2 - dist
+            while 0 <= nb.real < width and 0 <= nb.imag < heigth:
                 antinodes.add(nb)
-                nb = (nb[0] - dist[0], nb[1] - dist[1])
+                nb = nb - dist
     return len(antinodes)
 
 
