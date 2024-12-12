@@ -1,3 +1,4 @@
+from time import perf_counter
 from typing import Union
 
 from utils import Day
@@ -40,7 +41,6 @@ def part_two(rules: list[str], updates: list[str]) -> Union[str, int]:
     rules = [(int(rule.split('|')[0]), int(rule.split('|')[1])) for rule in rules.split()]
     updates = [[int(x) for x in update.split(',')] for update in updates.split()]
     for ix, update in enumerate(updates):
-        print(ix, '/', len(updates)-1)
         if not respect_all_rules(rules, update):
             total += reorder(rules, update)[len(update) // 2]
     return total
@@ -84,9 +84,11 @@ def main():
     else:
         data = Day.get_data(day).strip().split("\n\n")
 
-
-    print(f"day {day} part 1: {part_one(*data)}")
-    print(f"day {day} part 2: {part_two(*data)}")
+    start = perf_counter()
+    print(f"day {day} part 1: {part_one(*data)}  in {perf_counter() - start:.4f}s")
+    mid = perf_counter()
+    print(f"day {day} part 2: {part_two(*data)} in {perf_counter() - mid:.4f}s")
+    print(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
 main()

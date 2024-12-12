@@ -87,10 +87,11 @@ def main():
     else:
         data = Day.get_data(day).strip().split("\n")
 
-
-    print(f"day {day} part 1: {part_one(data)}")
     start = perf_counter()
-    print(f"day {day} part 2: {part_two(data)}, {perf_counter()-start}")
+    print(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
+    mid = perf_counter()
+    print(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
+    print(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
 main()
