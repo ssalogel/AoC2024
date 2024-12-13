@@ -11,17 +11,17 @@ def solve_linear(
     """
     n * bA[X] + m * bB[X] = prize[X]
     n * bA[Y] + m * bB[Y] = prize[Y]
-    
+
     2 equations, with 2 unknown
-    
-    linear algebra =/   
+
+    linear algebra =/
     3blue1Brown (Cramer's rule):
         https://www.youtube.com/watch?v=jBsC34PxzoM
     actual how to (Cramer's rule):
         https://www.youtube.com/watch?v=vXqlIOX2itM
-    
+
     n = Dn/D,  m = Dm/D
-    
+
     D = bA[X] * bB[Y] - bA[Y] * bB[X]
     Dn = prize[X] * bB[Y] - prize[Y] * bB[X]
     Dm = prize[X] * bA[Y] - prize[Y] * bA[X]
