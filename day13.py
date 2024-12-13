@@ -39,7 +39,7 @@ def part_one(data: list[str]) -> Union[str, int]:
 
         buttonA = int(game[0][game[0].find('+')+1:game[0].find(',')]), int(game[0][game[0].rfind('+')+1:])
         buttonB = int(game[1][game[1].find('+') + 1:game[1].find(',')]), int(game[1][game[1].rfind('+') + 1:])
-        prize = ButtonA = int(game[2][game[2].find('=')+1:game[2].find(',')]), int(game[2][game[2].rfind('=')+1:])
+        prize = int(game[2][game[2].find('=')+1:game[2].find(',')]), int(game[2][game[2].rfind('=')+1:])
 
         a, b = solve_linear(buttonA, buttonB, prize)
         total += 3*a + b
@@ -51,7 +51,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     for game in [x.split('\n') for x in data]:
         buttonA = int(game[0][game[0].find('+') + 1:game[0].find(',')]), int(game[0][game[0].rfind('+') + 1:])
         buttonB = int(game[1][game[1].find('+') + 1:game[1].find(',')]), int(game[1][game[1].rfind('+') + 1:])
-        prize = ButtonA = int(game[2][game[2].find('=') + 1:game[2].find(',')]), int(game[2][game[2].rfind('=') + 1:])
+        prize = int(game[2][game[2].find('=') + 1:game[2].find(',')]), int(game[2][game[2].rfind('=') + 1:])
 
         a, b = solve_linear(buttonA, buttonB, prize, 10000000000000)
         total += 3 * a + b
