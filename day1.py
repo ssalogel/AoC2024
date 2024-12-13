@@ -23,8 +23,8 @@ for line in data:
     l2.append(int(back))
 l1.sort()
 l2.sort()
-assert(len(l1) == len(l2))
-distance = sum(abs(a - b) for a,b in zip(l1, l2))
+assert len(l1) == len(l2)
+distance = sum(abs(a - b) for a, b in zip(l1, l2))
 print(f"day {day} part 1: {distance}")
 
 l1, l2 = [], []
@@ -34,5 +34,5 @@ for line in data:
     l2.append(int(back))
 
 right = Counter(l2)
-similarity = sum(right[n]*n for n in l1)
+similarity = sum(right[n] * n for n in l1)
 print(f"day {day} part 2: {similarity}")

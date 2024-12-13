@@ -5,20 +5,20 @@ from utils import Day
 
 
 def part_one(data: str) -> Union[str, int]:
-    mul_finder = re.compile(r'mul\((\d{1,3}),(\d{1,3})\)')
+    mul_finder = re.compile(r"mul\((\d{1,3}),(\d{1,3})\)")
     total = 0
     muls = re.findall(mul_finder, data)
-    total += sum([int(a)*int(b) for a, b in muls])
+    total += sum([int(a) * int(b) for a, b in muls])
     return total
 
 
 def part_two(data: str) -> Union[str, int]:
-    mul_finder = re.compile(r'mul\((\d{1,3}),(\d{1,3})\)')
+    mul_finder = re.compile(r"mul\((\d{1,3}),(\d{1,3})\)")
     total = 0
     stop_go = re.compile(r"don't\(\).*?do\(\)")
-    only_go = re.sub(stop_go, '----',data)
+    only_go = re.sub(stop_go, "----", data)
     muls = re.findall(mul_finder, only_go)
-    total += sum([int(a)*int(b) for a, b in muls])
+    total += sum([int(a) * int(b) for a, b in muls])
     return total
 
 

@@ -3,7 +3,9 @@ from time import perf_counter
 from utils import Day
 
 
-def solve_linear(buttonA: tuple[int, int], buttonB: tuple[int, int], target: tuple[int, int], target_offset: int = 0) -> tuple[int, int]:
+def solve_linear(
+    buttonA: tuple[int, int], buttonB: tuple[int, int], target: tuple[int, int], target_offset: int = 0
+) -> tuple[int, int]:
     X, Y = 0, 1
     prize = target[X] + target_offset, target[Y] + target_offset
     """
@@ -33,25 +35,27 @@ def solve_linear(buttonA: tuple[int, int], buttonB: tuple[int, int], target: tup
         return 0, 0
     return n, m
 
+
 def part_one(data: list[str]) -> Union[str, int]:
     total = 0
-    for game in [ x.split('\n') for x in data]:
+    for game in [x.split("\n") for x in data]:
 
-        buttonA = int(game[0][game[0].find('+')+1:game[0].find(',')]), int(game[0][game[0].rfind('+')+1:])
-        buttonB = int(game[1][game[1].find('+') + 1:game[1].find(',')]), int(game[1][game[1].rfind('+') + 1:])
-        prize = int(game[2][game[2].find('=')+1:game[2].find(',')]), int(game[2][game[2].rfind('=')+1:])
+        buttonA = int(game[0][game[0].find("+") + 1 : game[0].find(",")]), int(game[0][game[0].rfind("+") + 1 :])
+        buttonB = int(game[1][game[1].find("+") + 1 : game[1].find(",")]), int(game[1][game[1].rfind("+") + 1 :])
+        prize = int(game[2][game[2].find("=") + 1 : game[2].find(",")]), int(game[2][game[2].rfind("=") + 1 :])
 
         a, b = solve_linear(buttonA, buttonB, prize)
-        total += 3*a + b
+        total += 3 * a + b
 
     return total
 
+
 def part_two(data: list[str]) -> Union[str, int]:
     total = 0
-    for game in [x.split('\n') for x in data]:
-        buttonA = int(game[0][game[0].find('+') + 1:game[0].find(',')]), int(game[0][game[0].rfind('+') + 1:])
-        buttonB = int(game[1][game[1].find('+') + 1:game[1].find(',')]), int(game[1][game[1].rfind('+') + 1:])
-        prize = int(game[2][game[2].find('=') + 1:game[2].find(',')]), int(game[2][game[2].rfind('=') + 1:])
+    for game in [x.split("\n") for x in data]:
+        buttonA = int(game[0][game[0].find("+") + 1 : game[0].find(",")]), int(game[0][game[0].rfind("+") + 1 :])
+        buttonB = int(game[1][game[1].find("+") + 1 : game[1].find(",")]), int(game[1][game[1].rfind("+") + 1 :])
+        prize = int(game[2][game[2].find("=") + 1 : game[2].find(",")]), int(game[2][game[2].rfind("=") + 1 :])
 
         a, b = solve_linear(buttonA, buttonB, prize, 10000000000000)
         total += 3 * a + b
@@ -89,5 +93,6 @@ Prize: X=18641, Y=10279"""
     mid = perf_counter()
     print(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
+
 
 main()

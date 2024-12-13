@@ -1,28 +1,23 @@
 from typing import Union
-from itertools import cycle
 from utils import Day
 from collections import defaultdict
 from time import perf_counter
 
-
-UP = (0, -1)
-RIGHT = (1, 0)
-DOWN = (0, 1)
-LEFT = (-1, 0)
 
 def get_visited(grid: dict[complex, str], width, height, guard: complex) -> set[complex]:
     visited = set()
     move = 1j
     while 0 <= guard.real < width and 0 <= guard.imag < height:
         visited.add(guard)
-        while grid[guard + move] == '#':
+        while grid[guard + move] == "#":
             move *= -1j
         guard += move
     return visited
 
+
 def data_to_map(data: list[str]) -> dict[complex, str]:
-    d = defaultdict(lambda: '_')
-    d.update([(x+y*1j, letter) for y, line in enumerate(reversed(data)) for x, letter in enumerate(line) ])
+    d = defaultdict(lambda: "_")
+    d.update([(x + y * 1j, letter) for y, line in enumerate(reversed(data)) for x, letter in enumerate(line)])
     return d
 
 
@@ -31,10 +26,11 @@ def part_one(data: list[str]) -> Union[str, int]:
     heigth = len(data[0])
     grid = data_to_map(data)
     for pos, value in grid.items():
-        if '^' == value:
+        if "^" == value:
             guard = pos
             break
     return len(get_visited(grid, width, heigth, guard))
+
 
 def part_two(data: list[str]) -> Union[str, int]:
     width = len(data)
@@ -42,14 +38,14 @@ def part_two(data: list[str]) -> Union[str, int]:
     grid = data_to_map(data)
     total = 0
     for pos, value in grid.items():
-        if '^' == value:
+        if "^" == value:
             guard = pos
             break
 
     for pos in get_visited(grid, width, height, guard):
-        if grid[pos] in ['^', '#']:
+        if grid[pos] in ["^", "#"]:
             continue
-        grid[pos] = '#'
+        grid[pos] = "#"
         move = 1j
         n_guard = guard
         visited = set()
@@ -59,11 +55,11 @@ def part_two(data: list[str]) -> Union[str, int]:
                 total += 1
                 break
             visited.add((n_guard, move))
-            while grid[n_guard + move] == '#':
+            while grid[n_guard + move] == "#":
                 move *= -1j
             n_guard += move
 
-        grid[pos] = '.'
+        grid[pos] = "."
     return total
 
 

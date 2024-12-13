@@ -3,16 +3,18 @@ from typing import Union
 from itertools import combinations
 from utils import Day
 
+
 def to_grid(data: list[str]) -> dict[str, list[complex]]:
     d = {}
-    for char, pos in [(c, x + 1j*y) for y, line in enumerate(reversed(data)) for x,c in enumerate(line)]:
-        if char == '.':
+    for char, pos in [(c, x + 1j * y) for y, line in enumerate(reversed(data)) for x, c in enumerate(line)]:
+        if char == ".":
             continue
         if char in d:
             d[char].append(pos)
         else:
             d[char] = [pos]
     return d
+
 
 def part_one(data: list[str]) -> Union[str, int]:
     width = len(data)
@@ -29,6 +31,7 @@ def part_one(data: list[str]) -> Union[str, int]:
             if 0 <= n2.real < width and 0 <= n2.imag < heigth:
                 antinodes.add(n2)
     return len(antinodes)
+
 
 def part_two(data: list[str]) -> Union[str, int]:
     width = len(data)
@@ -72,13 +75,11 @@ def main():
     else:
         data = Day.get_data(day).strip().split("\n")
 
-
     start = perf_counter()
     print(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
     mid = perf_counter()
     print(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
-
 
 
 main()

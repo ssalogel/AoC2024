@@ -15,11 +15,14 @@ if test:
 else:
     data = Day.get_data(day).strip().split("\n")
 
+
 def all_same_sign(change: list[int]) -> bool:
     return all(map(lambda x: x >= 0, change)) or all(map(lambda x: x <= 0, change))
 
+
 def all_within_bounds(change: list[int], minbound: int, maxbound: int) -> bool:
     return all(map(lambda x: maxbound >= x >= minbound, map(abs, change)))
+
 
 def try_removing_any(level: list[int]) -> bool:
     for i in range(len(level)):
@@ -28,8 +31,8 @@ def try_removing_any(level: list[int]) -> bool:
         elif i == len(level):
             attempt = level
         else:
-            attempt = level[:i] + level[i+1:]
-        change = [l-attempt[i+1] for i,l in enumerate(attempt[:-1])]
+            attempt = level[:i] + level[i + 1 :]
+        change = [level - attempt[i + 1] for i, level in enumerate(attempt[:-1])]
         valid = all_within_bounds(change, 1, 3) and all_same_sign(change)
         if valid:
             return True
@@ -39,7 +42,7 @@ def try_removing_any(level: list[int]) -> bool:
 safe = 0
 for report in data:
     levels = list(map(int, report.split()))
-    changes = [l-levels[i+1] for i,l in enumerate(levels[:-1])]
+    changes = [level - levels[i + 1] for i, level in enumerate(levels[:-1])]
     safe += all_within_bounds(changes, 1, 3) and all_same_sign(changes)
 
 print(f"day {day} part 1: {safe}")

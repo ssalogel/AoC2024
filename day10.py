@@ -3,14 +3,18 @@ from typing import Union
 
 from utils import Day
 
-def to_map(data: list[str]) -> dict[complex, dict[str, int|set[complex]]]:
+
+def to_map(data: list[str]) -> dict[complex, dict[str, int | set[complex]]]:
     res = {}
     for y, row in enumerate(reversed(data)):
-        for x,digit in enumerate(row):
+        for x, digit in enumerate(row):
             res[x + 1j * y] = {"height": int(digit), "score": set()}
     return res
 
-def get_neigh_score(top_map: dict[complex, dict[str, int|set]], pos: complex, width: int, height: int) -> set[complex]:
+
+def get_neigh_score(
+    top_map: dict[complex, dict[str, int | set]], pos: complex, width: int, height: int
+) -> set[complex]:
     d = 1j
     target_height = top_map[pos]["height"] + 1
     scores = set()
@@ -23,7 +27,10 @@ def get_neigh_score(top_map: dict[complex, dict[str, int|set]], pos: complex, wi
             scores.update(top_map[neigh]["score"])
     return scores
 
-def get_neigh_trails(top_map: dict[complex, dict[str, int|set]], pos: complex, width: int, height: int) -> set[complex]:
+
+def get_neigh_trails(
+    top_map: dict[complex, dict[str, int | set]], pos: complex, width: int, height: int
+) -> set[complex]:
     d = 1j
     target_height = top_map[pos]["height"] + 1
     scores = set()
@@ -36,6 +43,7 @@ def get_neigh_trails(top_map: dict[complex, dict[str, int|set]], pos: complex, w
             sc = [(pos, x) for x in top_map[neigh]["score"]]
             scores.update(sc)
     return scores
+
 
 def part_one(data: list[str]) -> Union[str, int]:
     width = len(data)
@@ -50,7 +58,8 @@ def part_one(data: list[str]) -> Union[str, int]:
                     continue
                 if top_map[pos]["height"] == d:
                     top_map[pos]["score"].update(get_neigh_score(top_map, pos, width, height))
-    return sum(len(x["score"]) for x in top_map.values() if x["height"] == 0) 
+    return sum(len(x["score"]) for x in top_map.values() if x["height"] == 0)
+
 
 def part_two(data: list[str]) -> Union[str, int]:
     width = len(data)
@@ -66,6 +75,7 @@ def part_two(data: list[str]) -> Union[str, int]:
                 if top_map[pos]["height"] == d:
                     top_map[pos]["score"].update(get_neigh_trails(top_map, pos, width, height))
     return sum([len(x["score"]) for x in top_map.values() if x["height"] == 0])
+
 
 def main():
     test_case_1 = """89010123
@@ -84,13 +94,11 @@ def main():
     else:
         data = Day.get_data(day).strip().split("\n")
 
-
     start = perf_counter()
     print(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
     mid = perf_counter()
     print(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
-
 
 
 main()
