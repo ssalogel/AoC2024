@@ -32,7 +32,11 @@ def get_neigh(garden, gardenplot: GardenPlot, width, height, uncheck=False) -> l
 
 
 def bfs(
-    garden: dict[complex, GardenPlot], start: GardenPlot, width: int, height: int, visited: set[complex] = None
+    garden: dict[complex, GardenPlot],
+    start: GardenPlot,
+    width: int,
+    height: int,
+    visited: set[complex] = None,
 ) -> set[complex]:
     if visited is None:
         visited = set()

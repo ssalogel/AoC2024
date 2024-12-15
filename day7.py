@@ -18,7 +18,11 @@ def sub(number, target) -> tuple[bool, int]:
     return number >= target, number - target
 
 
-def test_calibration(target: int, steps: list[int], operators: list[Callable[[int, int], tuple[bool, int]]]) -> bool:
+def test_calibration(
+    target: int,
+    steps: list[int],
+    operators: list[Callable[[int, int], tuple[bool, int]]],
+) -> bool:
     if len(steps) == 1:
         return steps[0] == target
     valid = False

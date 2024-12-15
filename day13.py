@@ -4,7 +4,10 @@ from utils import Day
 
 
 def solve_linear(
-    buttonA: tuple[int, int], buttonB: tuple[int, int], target: tuple[int, int], target_offset: int = 0
+    buttonA: tuple[int, int],
+    buttonB: tuple[int, int],
+    target: tuple[int, int],
+    target_offset: int = 0,
 ) -> tuple[int, int]:
     X, Y = 0, 1
     prize = target[X] + target_offset, target[Y] + target_offset
