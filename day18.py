@@ -37,17 +37,27 @@ def part_one(data: list[str], width, length, safe) -> Union[str, int]:
 def part_two(data: list[str], width, length, safe) -> Union[str, int]:
     target = (width - 1) + (length - 1) * 1j
     grid = {x + y * 1j: "." for x in range(width) for y in range(length)}
-    for i, pos in enumerate(int(b[:b.index(",")]) + int(b[b.index(",") + 1:]) * 1j for b in data):
+    blocks = [int(b[:b.index(",")]) + int(b[b.index(",") + 1:]) * 1j for b in data]
+    for i, pos in enumerate(blocks):
         if i >= safe:
             break
         grid[pos] = "#"
 
-    for i, pos in enumerate(int(b[:b.index(",")]) + int(b[b.index(",") + 1:]) * 1j for b in data[safe:]):
-        grid[pos] = "#"
-        costs = djikstra(grid, width, length)
+    # binary search position that blocks
+    last_working, first_blocking = safe - 1, len(data) - 1
+    while last_working + 1 < first_blocking:
+        test_stop = (last_working + first_blocking)//2
+        test_grid = grid.copy()
+        for pos in blocks[last_working:test_stop+1]:
+            test_grid[pos] = "#"
+        costs = djikstra(test_grid, width, length)
         if costs[target] != inf:
-            continue
-        return str(int(pos.real)) + "," + str(int(pos.imag))
+            last_working = test_stop
+            grid = test_grid
+        else:
+            first_blocking = test_stop
+
+    return blocks[first_blocking]
 
 
 def main():
