@@ -5,12 +5,7 @@ from collections import Counter, defaultdict
 from itertools import combinations
 from math import isnan
 
-def transpose(grid: list[list]) -> list[list]:
-    return [list(x) for x in zip(*grid)]
-
-def bfs(grid: list[list[str]], start: tuple[int, int], end: tuple[int, int]) -> int:
-    if start == end:
-        return 0
+def bfs(grid: list[list[str]], start: tuple[int, int]) -> int:
     visited = set()
     to_visit = [(start, 0)]
     costs = defaultdict(lambda: float("inf"))
@@ -27,11 +22,10 @@ def bfs(grid: list[list[str]], start: tuple[int, int], end: tuple[int, int]) -> 
 def part_one(data: list[str]) -> Union[str, int]:
     grid = list(list(row) for row in data)
     for y, row in enumerate(grid):
-        if "E" in row:
-            end = (row.index("E"), y)
         if "S" in row:
             start = (row.index("S"), y)
-    costs = bfs(grid, start, end)
+            break
+    costs = bfs(grid, start)
     cheats = []
     for y in range(1, len(grid) - 1):
         for x in range(1, len(grid[0]) - 1):
@@ -49,11 +43,10 @@ def part_one(data: list[str]) -> Union[str, int]:
 def part_two(data: list[str]) -> Union[str, int]:
     grid = list(list(row) for row in data)
     for y, row in enumerate(grid):
-        if "E" in row:
-            end = (row.index("E"), y)
         if "S" in row:
             start = (row.index("S"), y)
-    costs = bfs(grid, start, end)
+            break
+    costs = bfs(grid, start)
     cheats = []
     for y in range(1, len(grid) - 1):
         for x in range(1, len(grid[0]) - 1):
