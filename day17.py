@@ -99,7 +99,7 @@ def part_two(data: list[str]) -> Union[str, int]:
             for i in range(8):
                 global output
                 output = []
-                start_value = i + (t * 8)
+                start_value = i + (t << 3)
                 registers["A"] = start_value
                 registers["pointer"] = 0
                 while registers["pointer"] < len(instr):
