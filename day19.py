@@ -25,6 +25,7 @@ def count_design(design: str, towels: frozenset[str]) -> int:
             nb += count_design(design.removeprefix(towel), towels)
     return nb
 
+
 def part_one(data: list[str]) -> Union[str, int]:
     towels, designs = data
     towels = frozenset(towels.split(", "))

@@ -5,6 +5,7 @@ from collections import Counter, defaultdict
 from itertools import combinations
 from math import isnan
 
+
 def bfs(grid: list[list[str]], start: tuple[int, int]) -> int:
     visited = set()
     to_visit = [(start, 0)]
@@ -18,6 +19,7 @@ def bfs(grid: list[list[str]], start: tuple[int, int]) -> int:
             if npos not in visited and grid[pos[1] + y][pos[0] + x] != "#":
                 to_visit.append((npos, cost + 1))
     return costs
+
 
 def part_one(data: list[str]) -> Union[str, int]:
     grid = list(list(row) for row in data)
@@ -63,7 +65,6 @@ def part_two(data: list[str]) -> Union[str, int]:
                             cheats.append(cheat)
     c = Counter(cheats)
     return sum(map(lambda x: x >= 100, cheats))
-
 
 
 def main():

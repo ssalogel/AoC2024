@@ -4,29 +4,29 @@ from time import perf_counter
 from utils import Day
 from heapq import heappush, heappop
 
-def djikstra(grid: dict[complex, str], width, length) -> dict[complex, int]:
-        count = 0
-        heap = [(0, count, 0)]
-        costs = dict([(x, inf) for x in grid if grid[x] != "#"])
-        costs[0] = 0
-        directions = [1, 1j, -1, -1j]
-        while heap:
-            cost, _, curr_pos = heappop(heap)
-            for direction in directions:
-                next_pos = curr_pos + direction
-                next_cost = cost + 1
-                if next_pos in grid and grid[next_pos] != "#" and next_cost < costs[next_pos]:
-                    costs[next_pos] = next_cost
-                    count += 1
-                    heappush(heap, (next_cost, count, next_pos))
-        return costs
 
+def djikstra(grid: dict[complex, str], width, length) -> dict[complex, int]:
+    count = 0
+    heap = [(0, count, 0)]
+    costs = dict([(x, inf) for x in grid if grid[x] != "#"])
+    costs[0] = 0
+    directions = [1, 1j, -1, -1j]
+    while heap:
+        cost, _, curr_pos = heappop(heap)
+        for direction in directions:
+            next_pos = curr_pos + direction
+            next_cost = cost + 1
+            if next_pos in grid and grid[next_pos] != "#" and next_cost < costs[next_pos]:
+                costs[next_pos] = next_cost
+                count += 1
+                heappush(heap, (next_cost, count, next_pos))
+    return costs
 
 
 def part_one(data: list[str], width, length, safe) -> Union[str, int]:
     target = (width - 1) + (length - 1) * 1j
     grid = {x + y * 1j: "." for x in range(width) for y in range(length)}
-    for i, pos in enumerate(int(b[:b.index(",")]) + int(b[b.index(",") + 1:]) * 1j for b in data):
+    for i, pos in enumerate(int(b[: b.index(",")]) + int(b[b.index(",") + 1 :]) * 1j for b in data):
         if i >= safe:
             break
         grid[pos] = "#"
@@ -37,7 +37,7 @@ def part_one(data: list[str], width, length, safe) -> Union[str, int]:
 def part_two(data: list[str], width, length, safe) -> Union[str, int]:
     target = (width - 1) + (length - 1) * 1j
     grid = {x + y * 1j: "." for x in range(width) for y in range(length)}
-    blocks = [int(b[:b.index(",")]) + int(b[b.index(",") + 1:]) * 1j for b in data]
+    blocks = [int(b[: b.index(",")]) + int(b[b.index(",") + 1 :]) * 1j for b in data]
     for i, pos in enumerate(blocks):
         if i >= safe:
             break
@@ -46,9 +46,9 @@ def part_two(data: list[str], width, length, safe) -> Union[str, int]:
     # binary search position that blocks
     last_working, first_blocking = safe - 1, len(data) - 1
     while last_working + 1 < first_blocking:
-        test_stop = (last_working + first_blocking)//2
+        test_stop = (last_working + first_blocking) // 2
         test_grid = grid.copy()
-        for pos in blocks[last_working:test_stop+1]:
+        for pos in blocks[last_working : test_stop + 1]:
             test_grid[pos] = "#"
         costs = djikstra(test_grid, width, length)
         if costs[target] != inf:

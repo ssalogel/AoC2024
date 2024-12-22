@@ -8,14 +8,14 @@ numpad = {
     "A": {"<": "0", "^": "3"},
     "0": {">": "A", "^": "2"},
     "1": {">": "2", "^": "4"},
-    "2": {"<": "1",">": "3", "^": "5", "v": "0"},
+    "2": {"<": "1", ">": "3", "^": "5", "v": "0"},
     "3": {"<": "2", "^": "6", "v": "A"},
     "4": {">": "5", "^": "7", "v": "1"},
-    "5": {"<": "4",">": "6", "^": "8", "v": "2"},
+    "5": {"<": "4", ">": "6", "^": "8", "v": "2"},
     "6": {"<": "5", "^": "9", "v": "3"},
     "7": {">": "8", "v": "4"},
-    "8": {"<": "7",">": "9", "v": "5"},
-    "9": {"<": "8", "v": "6"}
+    "8": {"<": "7", ">": "9", "v": "5"},
+    "9": {"<": "8", "v": "6"},
 }
 
 keypad = {
@@ -23,8 +23,9 @@ keypad = {
     "^": {">": "A", "v": "v"},
     "<": {">": "v"},
     "v": {"<": "<", "^": "^", ">": ">"},
-    ">": {"<": "v", "^": "A"}
+    ">": {"<": "v", "^": "A"},
 }
+
 
 @lru_cache()
 def navigate_numpad(start: str, end: str) -> set[str]:
@@ -46,9 +47,6 @@ def navigate_numpad(start: str, end: str) -> set[str]:
     return paths
 
 
-
-
-
 @lru_cache()
 def navigate_keypad(start: str, end: str) -> set[str]:
     if start == end:
@@ -68,6 +66,7 @@ def navigate_keypad(start: str, end: str) -> set[str]:
             heappush(to_explore, (len_path + 1, n, path_so_far + d))
     return paths
 
+
 @lru_cache()
 def get_best_key_paths_len(path: str, depth: int = 0) -> int:
     if depth == 0:
@@ -82,9 +81,11 @@ def get_best_key_paths_len(path: str, depth: int = 0) -> int:
         min_key = float("inf")
         for section in key:
             attmp = get_best_key_paths_len(section, depth - 1)
-            if min_key > attmp: min_key = attmp
+            if min_key > attmp:
+                min_key = attmp
         min_path += min_key
     return min_path
+
 
 def solve(code, depth):
     numpad_pos = "A"
@@ -98,14 +99,16 @@ def solve(code, depth):
         min_section = float("inf")
         for path in section:
             length = get_best_key_paths_len(path, depth)
-            if length < min_section: min_section = length
+            if length < min_section:
+                min_section = length
         min_path += min_section
     return min_path
+
 
 def part_one(data: list[str]) -> Union[str, int]:
     res = []
     for code in data:
-        res.append(solve(code, 2) *  int(code[:-1]))
+        res.append(solve(code, 2) * int(code[:-1]))
     return sum(res)
 
 
