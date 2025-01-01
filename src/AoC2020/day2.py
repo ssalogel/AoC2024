@@ -3,22 +3,35 @@ from time import perf_counter
 from src.utils import Day
 import sys
 import logging
+from collections import Counter
 
 logger = logging.getLogger("AoC")
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    return data
+    tot = 0
+    for line in data:
+        rule, password = line.split(": ", 1)
+        minshow, maxshow, letter = int(rule[:rule.index("-")]), int(rule[rule.index("-") + 1: rule.index(" ")]), rule[-1]
+        c = Counter(password)
+        tot += minshow <= c[letter] <= maxshow
+    return tot
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    pass
-
+    tot = 0
+    for line in data:
+        rule, password = line.split(": ", 1)
+        pos1, pos2, letter = int(rule[:rule.index("-")]), int(rule[rule.index("-") + 1: rule.index(" ")]), rule[-1]
+        tot += (password[pos1-1] == letter) ^ (password[pos2-1] == letter)
+    return tot
 
 def main():
-    test_case_1 = """"""
+    test_case_1 = """1-3 a: abcde
+1-3 b: cdefg
+2-9 c: ccccccccc"""
 
-    test = True
+    test = False
     day = 2
     if test:
         logger.info("TEST VALUES")
