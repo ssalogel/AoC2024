@@ -1,6 +1,9 @@
 from typing import Union
 from time import perf_counter
 from src.utils import Day
+import logging
+
+logger = logging.getLogger("AoC")
 from collections import defaultdict
 from statistics import variance
 
@@ -124,7 +127,7 @@ p=9,5 v=-3,-3"""
     test = False
     day = 14
     if test:
-        print("TEST VALUES")
+        logger.info("TEST VALUES")
         data = test_case_1.strip().split("\n")
         width = 11
         height = 7
@@ -134,11 +137,12 @@ p=9,5 v=-3,-3"""
         height = 103
 
     start = perf_counter()
-    print(f"day {day} part 1: {part_one(data, width, height)}  in {perf_counter() - start:.4f}s")
+    logger.info(f"day {day} part 1: {part_one(data, width, height)}  in {perf_counter() - start:.4f}s")
     mid = perf_counter()
-    print(f"day {day} part 2: {part_two(data,  width, height)} in {perf_counter() - mid:.4f}s")
-    print(f"the whole day {day} took {perf_counter() - start:.4f}s")
+    logger.info(f"day {day} part 2: {part_two(data,  width, height)} in {perf_counter() - mid:.4f}s")
+    logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.NOTSET)
     main()

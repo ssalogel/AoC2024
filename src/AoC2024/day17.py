@@ -1,6 +1,9 @@
 from typing import Union
 from time import perf_counter
 from src.utils import Day
+import logging
+
+logger = logging.getLogger("AoC")
 
 
 def adv(operand: int):
@@ -120,17 +123,18 @@ Program: 0,1,5,4,3,0"""
     test = False
     day = 17
     if test:
-        print("TEST VALUES")
+        logger.info("TEST VALUES")
         data = test_case_1.strip().split("\n\n")
     else:
         data = Day.get_data(2024, day).strip().split("\n\n")
 
     start = perf_counter()
-    print(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
+    logger.info(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
     mid = perf_counter()
-    print(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
-    print(f"the whole day {day} took {perf_counter() - start:.4f}s")
+    logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
+    logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.NOTSET)
     main()

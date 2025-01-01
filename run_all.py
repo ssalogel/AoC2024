@@ -1,5 +1,9 @@
 from src import years
 from time import perf_counter
+import logging
+
+logger = logging.getLogger("AoC")
+logger.setLevel(logging.ERROR)
 
 start = perf_counter()
 for year, days in years:
