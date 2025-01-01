@@ -1,7 +1,7 @@
 from time import perf_counter
 from typing import Union
 from math import log10, floor
-from utils import Day
+from src.utils import Day
 from collections import Counter
 
 

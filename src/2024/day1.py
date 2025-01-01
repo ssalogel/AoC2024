@@ -1,4 +1,4 @@
-from utils import Day
+from src.utils import Day
 from collections import Counter
 
 test_case_1 = """3   4

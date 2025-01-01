@@ -1,5 +1,5 @@
 from typing import Union
-from utils import Day
+from src.utils import Day
 from collections import defaultdict
 from time import perf_counter
 

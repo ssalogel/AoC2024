@@ -1,6 +1,6 @@
 from typing import Union
 from time import perf_counter
-from utils import Day
+from src.utils import Day
 from collections import defaultdict
 
 def get_connections(data: list[str]) -> dict[str, set[str]]:

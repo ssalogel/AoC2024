@@ -1,7 +1,7 @@
 from time import perf_counter
 from typing import Union
 
-from utils import Day
+from src.utils import Day
 
 
 def to_map(data: list[str]) -> dict[complex, dict[str, int | set[complex]]]:

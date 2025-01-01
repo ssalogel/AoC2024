@@ -1,7 +1,7 @@
 from time import perf_counter
 from typing import Union, Callable
 from math import log10, floor
-from utils import Day
+from src.utils import Day
 
 
 def split(number, target) -> tuple[bool, int]:

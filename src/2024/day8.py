@@ -1,7 +1,7 @@
 from time import perf_counter
 from typing import Union
 from itertools import combinations
-from utils import Day
+from src.utils import Day
 
 
 def to_grid(data: list[str]) -> dict[str, list[complex]]:

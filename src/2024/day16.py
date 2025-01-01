@@ -1,7 +1,7 @@
 from typing import Union
 from time import perf_counter
-from utils import Day
-from heapq import heappop, heappush, heapify
+from src.utils import Day
+from heapq import heappop, heappush
 from math import inf
 
 

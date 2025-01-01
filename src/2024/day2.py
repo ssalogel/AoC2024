@@ -1,5 +1,4 @@
-from utils import Day
-
+from src.utils import Day
 
 test_case_1 = """7 6 4 2 1
 1 2 7 8 9

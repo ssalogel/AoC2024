@@ -1,7 +1,7 @@
 from typing import Union
 from time import perf_counter
 
-from utils import Day
+from src.utils import Day
 
 
 def part_one(data: list[str]) -> Union[str, int]:
@@ -89,7 +89,7 @@ def part_two_manual(data):
         wire = f"z{n:02}"
         outputs.append(get_parent_rules(wires, wire))
 
-    with open("wiresScrambled.txt", "w") as f:
+    with open("../../wiresScrambled.txt", "w") as f:
         for output in outputs:
             f.writelines("\n".join(output))
             f.write("\n\n")

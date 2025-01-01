@@ -1,7 +1,7 @@
 from time import perf_counter
 from typing import Union
 
-from utils import Day
+from src.utils import Day
 
 
 def respect_all_rules(rules, update):

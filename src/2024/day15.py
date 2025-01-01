@@ -1,6 +1,6 @@
 from typing import Union
 from time import perf_counter
-from utils import Day
+from src.utils import Day
 
 
 def move(grid, start, direction) -> tuple[bool, tuple[int, int]]:
