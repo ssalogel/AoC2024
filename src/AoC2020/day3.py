@@ -3,22 +3,48 @@ from time import perf_counter
 from src.utils import Day
 import sys
 import logging
+from math import prod
 
 logger = logging.getLogger("AoC")
 
 
+def count_tree_in_path(pattern: list[str], delta_x: int, delta_y: int) -> int:
+    res = 0
+    x = 0
+    y = 0
+    while y < len(pattern):
+        res += pattern[y][x] == "#"
+        x = (x + delta_x) % len(pattern[0])
+        y += delta_y
+    return res
+
 def part_one(data: list[str]) -> Union[str, int]:
-    return data
+    return count_tree_in_path(data, 3, 1)
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    pass
+    return prod((count_tree_in_path(data, 1, 1),
+                 count_tree_in_path(data, 3, 1),
+                 count_tree_in_path(data, 5, 1),
+                 count_tree_in_path(data, 7, 1),
+                 count_tree_in_path(data, 1, 2),
+                 ))
 
 
 def main():
-    test_case_1 = """"""
+    test_case_1 = """..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#"""
 
-    test = True
+    test = False
     day = 3
     if test:
         logger.info("TEST VALUES")
