@@ -70,7 +70,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return total
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """Button A: X+94, Y+34
 Button B: X+22, Y+67
 Prize: X=8400, Y=5400
@@ -87,7 +87,7 @@ Button A: X+69, Y+23
 Button B: X+27, Y+71
 Prize: X=18641, Y=10279"""
 
-    test = False
+    
     day = 13
     if test:
         logger.info("TEST VALUES")
@@ -104,4 +104,4 @@ Prize: X=18641, Y=10279"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

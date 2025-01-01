@@ -51,8 +51,8 @@ def part_two(rules: list[str], updates: list[str]) -> Union[str, int]:
     return total
 
 
-def main():
-    test = False
+def main(test: bool = False):
+    
 
     test_case_1 = """47|53
 97|13
@@ -98,4 +98,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

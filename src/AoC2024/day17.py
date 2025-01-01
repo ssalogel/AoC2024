@@ -114,14 +114,14 @@ def part_two(data: list[str]) -> Union[str, int]:
     return min(new_start)
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """Register A: 729
 Register B: 0
 Register C: 0
 
 Program: 0,1,5,4,3,0"""
 
-    test = False
+    
     day = 17
     if test:
         logger.info("TEST VALUES")
@@ -138,4 +138,4 @@ Program: 0,1,5,4,3,0"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

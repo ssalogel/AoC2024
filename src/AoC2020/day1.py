@@ -33,7 +33,7 @@ def part_two(data: list[str]) -> Union[str, int]:
 
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """1721
 979
 366
@@ -41,7 +41,7 @@ def main():
 675
 1456"""
 
-    test = False
+    
     day = 1
     if test:
         logger.info("TEST VALUES")
@@ -57,4 +57,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

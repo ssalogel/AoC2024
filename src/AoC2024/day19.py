@@ -46,7 +46,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return sum(count_design(x, towels) for x in designs)
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """r, wr, b, g, bwu, rb, gb, br
 
 brwrr
@@ -58,7 +58,7 @@ bwurrg
 brgr
 bbrgwb"""
 
-    test = False
+    
     day = 19
     if test:
         logger.info("TEST VALUES")
@@ -75,4 +75,4 @@ bbrgwb"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

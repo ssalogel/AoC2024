@@ -31,7 +31,7 @@ def part_two(data):
     return sum(right[n] * n for n in l1)
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """3   4
     4   3
     2   5
@@ -39,7 +39,7 @@ def main():
     3   9
     3   3"""
 
-    test = False
+    
     day = 1
     if test:
         data = test_case_1.strip().split("\n")
@@ -55,4 +55,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

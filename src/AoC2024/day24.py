@@ -100,7 +100,7 @@ def part_two_manual(data):
             f.write("\n\n")
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """
 
 x00: 1
@@ -151,7 +151,7 @@ hwm AND bqk -> z03
 tgd XOR rvg -> z12
 tnw OR pbm -> gnj"""
 
-    test = False
+    
     day = 24
     if test:
         logger.info("TEST VALUES")
@@ -168,4 +168,4 @@ tnw OR pbm -> gnj"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

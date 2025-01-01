@@ -26,10 +26,10 @@ def part_two(data: str) -> Union[str, int]:
     return total
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"""
     test_case_2 = """xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?don't()do()mul(8,5))"""
-    test = False
+    
     day = 3
     if test:
         data = test_case_1.strip().split("\n")
@@ -46,4 +46,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

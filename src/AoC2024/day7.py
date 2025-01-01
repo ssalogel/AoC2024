@@ -59,7 +59,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return total
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """190: 10 19
 3267: 81 40 27
 83: 17 5
@@ -70,7 +70,7 @@ def main():
 21037: 9 7 18 13
 292: 11 6 16 20"""
 
-    test = False
+    
     day = 7
     if test:
         data = test_case_1.strip().split("\n")
@@ -86,4 +86,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

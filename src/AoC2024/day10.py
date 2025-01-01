@@ -81,7 +81,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return sum([len(x["score"]) for x in top_map.values() if x["height"] == 0])
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """89010123
 78121874
 87430965
@@ -91,7 +91,7 @@ def main():
 01329801
 10456732"""
 
-    test = False
+    
     day = 10
     if test:
         data = test_case_1.strip().split("\n")
@@ -108,4 +108,4 @@ def main():
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

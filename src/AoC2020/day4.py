@@ -48,7 +48,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return tot
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
 byr:1937 iyr:2017 cid:147 hgt:183cm
 
@@ -90,7 +90,7 @@ hgt:59cm ecl:zzz
 eyr:2038 hcl:74454a iyr:2023
 pid:3556412378 byr:2007"""
 
-    test = False
+    
     day = 4
     if test:
         logger.info("TEST VALUES")
@@ -106,4 +106,4 @@ pid:3556412378 byr:2007"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout) 
-    main()
+    main(True)

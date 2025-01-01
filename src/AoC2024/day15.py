@@ -96,7 +96,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return sum([x + 100 * y for y, row in enumerate(grid) for x, c in enumerate(row) if c == "["])
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """##########
 #..O..O.O#
 #......O.#
@@ -119,7 +119,7 @@ vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
 ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
 v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^"""
 
-    test = False
+    
     day = 15
     if test:
         logger.info("TEST VALUES")
@@ -136,4 +136,4 @@ v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

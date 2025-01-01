@@ -111,7 +111,7 @@ def part_two(data: list[str], width: int, height: int) -> Union[str, int]:
     return tot
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """p=0,4 v=3,-3
 p=6,3 v=-1,-3
 p=10,3 v=-1,2
@@ -125,7 +125,7 @@ p=7,3 v=-1,2
 p=2,4 v=2,-3
 p=9,5 v=-3,-3"""
 
-    test = False
+    
     day = 14
     if test:
         logger.info("TEST VALUES")
@@ -146,4 +146,4 @@ p=9,5 v=-3,-3"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

@@ -58,7 +58,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return len(antinodes)
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """............
 ........0...
 .....0......
@@ -72,7 +72,7 @@ def main():
 ............
 ............"""
 
-    test = False
+    
     day = 8
     if test:
         data = test_case_1.strip().split("\n")
@@ -88,4 +88,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

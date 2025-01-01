@@ -8,17 +8,34 @@ logger = logging.getLogger("AoC")
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    return data
+    seats = []
+    for line in data:
+        row = int(line[:-3].replace("F", "0").replace("B", "1"), 2)
+        col = int(line[-3:].replace("R", "1").replace("L", "0"), 2)
+        seats.append((row << 3) + col)
+
+
+    return max(seats)
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    pass
+    seats = []
+    for line in data:
+        row = int(line[:-3].replace("F", "0").replace("B", "1"), 2)
+        col = int(line[-3:].replace("R", "1").replace("L", "0"), 2)
+        seats.append((row << 3) + col)
+    seats.sort()
+    changes = [b - a for a, b in zip(seats, seats[1:])]
+    ix = changes.index(2)
+    return seats[ix] + 1
+
+def main(test: bool = False):
+    test_case_1 = """FBFBBFFRLR
+BFFFBBFRRR
+FFFBBBFRRR
+BBFFBBFRLL"""
 
 
-def main():
-    test_case_1 = """"""
-
-    test = True
     day = 5
     if test:
         logger.info("TEST VALUES")

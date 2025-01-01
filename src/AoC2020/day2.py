@@ -26,12 +26,12 @@ def part_two(data: list[str]) -> Union[str, int]:
         tot += (password[pos1-1] == letter) ^ (password[pos2-1] == letter)
     return tot
 
-def main():
+def main(test: bool = False):
     test_case_1 = """1-3 a: abcde
 1-3 b: cdefg
 2-9 c: ccccccccc"""
 
-    test = False
+    
     day = 2
     if test:
         logger.info("TEST VALUES")
@@ -47,4 +47,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

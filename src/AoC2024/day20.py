@@ -71,7 +71,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return sum(map(lambda x: x >= 100, cheats))
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """###############
 #...#...#.....#
 #.#.#.#.#.###.#
@@ -89,7 +89,7 @@ def main():
 ###############
 """
 
-    test = False
+    
     day = 20
     if test:
         logger.info("TEST VALUES")
@@ -106,4 +106,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

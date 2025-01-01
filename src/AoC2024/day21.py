@@ -123,14 +123,14 @@ def part_two(data: list[str]) -> Union[str, int]:
     return sum(res)
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """029A
 980A
 179A
 456A
 379A"""
 
-    test = False
+    
     day = 21
     if test:
         logger.info("TEST VALUES")
@@ -147,4 +147,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

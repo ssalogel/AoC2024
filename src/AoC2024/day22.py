@@ -56,13 +56,13 @@ def part_two(data: list[str]) -> Union[str, int]:
     return c.most_common(1).pop()[1]
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """1
 3
 2
 AoC2024"""
 
-    test = False
+    
     day = 22
     if test:
         logger.info("TEST VALUES")
@@ -79,4 +79,4 @@ AoC2024"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

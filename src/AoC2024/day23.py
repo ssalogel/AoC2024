@@ -55,7 +55,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return ",".join(max_clique)
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """kh-tc
 qp-kh
 de-cg
@@ -89,7 +89,7 @@ wh-qp
 tb-vc
 td-yn"""
 
-    test = False
+    
     day = 23
     if test:
         logger.info("TEST VALUES")
@@ -106,4 +106,4 @@ td-yn"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

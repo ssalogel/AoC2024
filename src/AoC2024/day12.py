@@ -120,7 +120,7 @@ def part_two(data: list[str]) -> Union[str, int]:
     return total
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """RRRRIICCFF
 RRRRIICCCF
 VVRRRCCFFF
@@ -132,7 +132,7 @@ MIIIIIJJEE
 MIIISIJEEE
 MMMISSJEEE"""
 
-    test = False
+    
     day = 12
     if test:
         logger.info("TEST VALUES")
@@ -149,4 +149,4 @@ MMMISSJEEE"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)

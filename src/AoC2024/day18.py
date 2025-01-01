@@ -64,7 +64,7 @@ def part_two(data: list[str], width, length, safe) -> Union[str, int]:
     return blocks[first_blocking]
 
 
-def main():
+def main(test: bool = False):
     test_case_1 = """5,4
 4,2
 4,5
@@ -91,7 +91,7 @@ def main():
 1,6
 2,0"""
 
-    test = False
+    
     day = 18
     if test:
         logger.info("TEST VALUES")
@@ -112,4 +112,4 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main()
+    main(True)
