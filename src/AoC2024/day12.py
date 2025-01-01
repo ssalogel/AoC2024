@@ -1,6 +1,7 @@
 from typing import Union
 from time import perf_counter
 from src.utils import Day
+import sys
 import logging
 
 logger = logging.getLogger("AoC")
@@ -147,5 +148,5 @@ MMMISSJEEE"""
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.NOTSET)
+    logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
     main()

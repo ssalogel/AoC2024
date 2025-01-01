@@ -1,6 +1,7 @@
 from typing import Union
 from time import perf_counter
 from src.utils import Day
+import sys
 import logging
 
 logger = logging.getLogger("AoC")
@@ -31,5 +32,6 @@ def main():
     logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
-if __name__ == '__main__': 
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.NOTSET, stream=sys.stdout) 
     main()
