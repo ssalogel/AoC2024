@@ -9,14 +9,14 @@ def part_one(data: list[str]) -> Union[str, int]:
     for elem in data:
         rows = elem.replace(".", "0").replace("#", "1").split()
         if rows[0] == "00000":
-            keys.append([int(x,2) for x in rows[1:-1]])
+            keys.append([int(x, 2) for x in rows[1:-1]])
         else:
-            locks.append([int(x,2) for x in rows[1:-1]])
+            locks.append([int(x, 2) for x in rows[1:-1]])
     tot = 0
     for lock in locks:
         for key in keys:
             valid = True
-            for a,b in zip(lock, key):
+            for a, b in zip(lock, key):
                 valid &= not a & b
             tot += valid
 
@@ -70,11 +70,12 @@ def main():
         print("TEST VALUES")
         data = test_case_1.strip().split("\n\n")
     else:
-        data = Day.get_data(day).strip().split("\n\n")
+        data = Day.get_data(2024, day).strip().split("\n\n")
 
     start = perf_counter()
     print(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
-main()
+if __name__ == "__main__":
+    main()

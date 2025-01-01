@@ -3,10 +3,11 @@ from time import perf_counter
 from src.utils import Day
 from collections import defaultdict
 
+
 def get_connections(data: list[str]) -> dict[str, set[str]]:
     res = defaultdict(lambda: set())
     for conn in data:
-        a, b = conn.split('-')
+        a, b = conn.split("-")
         res[a].add(b)
         res[b].add(a)
     return res
@@ -19,7 +20,7 @@ def part_one(data: list[str]) -> Union[str, int]:
     for compA, conns in connections.items():
         pot_conns = list(conns.difference(tested))
         for i, compB in enumerate(pot_conns):
-            for compC in pot_conns[i+1:]:
+            for compC in pot_conns[i + 1 :]:
                 if compC in connections[compB]:
                     triple = [compA, compB, compC]
                     triple.sort()
@@ -37,9 +38,10 @@ def bron_kerbosh(graph: dict[str, set[str]], r=set(), p=None, x=set()) -> list[s
     else:
         u = next(iter(p.union(x)))
         for v in p.difference(graph[u]):
-            yield from bron_kerbosh(graph, r=r.union({v}), p=p.intersection(graph[v]), x= x.intersection(graph[v]))
+            yield from bron_kerbosh(graph, r=r.union({v}), p=p.intersection(graph[v]), x=x.intersection(graph[v]))
             p.remove(v)
             x.add(v)
+
 
 def part_two(data: list[str]) -> Union[str, int]:
     connections = get_connections(data)
@@ -89,7 +91,7 @@ td-yn"""
         print("TEST VALUES")
         data = test_case_1.strip().split("\n")
     else:
-        data = Day.get_data(day).strip().split("\n")
+        data = Day.get_data(2024, day).strip().split("\n")
 
     start = perf_counter()
     print(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
@@ -98,4 +100,5 @@ td-yn"""
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
-main()
+if __name__ == "__main__":
+    main()

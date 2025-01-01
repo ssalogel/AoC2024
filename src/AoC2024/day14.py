@@ -129,7 +129,7 @@ p=9,5 v=-3,-3"""
         width = 11
         height = 7
     else:
-        data = Day.get_data(day).strip().split("\n")
+        data = Day.get_data(2024, day).strip().split("\n")
         width = 101
         height = 103
 
@@ -140,4 +140,5 @@ p=9,5 v=-3,-3"""
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
-main()
+if __name__ == "__main__":
+    main()

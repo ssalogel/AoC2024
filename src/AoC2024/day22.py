@@ -3,6 +3,7 @@ from time import perf_counter
 from src.utils import Day
 from collections import deque, Counter
 
+
 def derive(secret: int) -> int:
     secret ^= secret << 6
     secret = secret % 16777216
@@ -23,7 +24,7 @@ def part_one(data: list[str]) -> Union[str, int]:
     return res
 
 
-def generate_patterns_sellability(secret: int) -> dict[tuple[int, int, int, int],int]:
+def generate_patterns_sellability(secret: int) -> dict[tuple[int, int, int, int], int]:
     sequence = deque()
     results = {}
     prev = secret % 10
@@ -41,6 +42,7 @@ def generate_patterns_sellability(secret: int) -> dict[tuple[int, int, int, int]
         prev = curr
     return results
 
+
 def part_two(data: list[str]) -> Union[str, int]:
     c = Counter()
     for d in data:
@@ -54,7 +56,7 @@ def main():
     test_case_1 = """1
 3
 2
-2024"""
+AoC2024"""
 
     test = False
     day = 22
@@ -62,7 +64,7 @@ def main():
         print("TEST VALUES")
         data = test_case_1.strip().split("\n")
     else:
-        data = Day.get_data(day).strip().split("\n")
+        data = Day.get_data(2024, day).strip().split("\n")
 
     start = perf_counter()
     print(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
@@ -71,4 +73,5 @@ def main():
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
-main()
+if __name__ == "__main__":
+    main()

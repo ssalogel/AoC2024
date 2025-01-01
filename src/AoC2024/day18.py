@@ -95,7 +95,7 @@ def main():
         width = length = 7
         safe = 12
     else:
-        data = Day.get_data(day).strip().split("\n")
+        data = Day.get_data(2024, day).strip().split("\n")
         width = length = 71
         safe = 1024
 
@@ -106,4 +106,5 @@ def main():
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
-main()
+if __name__ == "__main__":
+    main()

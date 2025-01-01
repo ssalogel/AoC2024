@@ -5,7 +5,7 @@ from pathlib import Path
 from src.utils import cookies
 
 
-def get_data(year:int, day: int) -> str:
+def get_data(year: int, day: int) -> str:
     file = Path(f"data/day{day}")
     if file.exists():
         return file.open().read()

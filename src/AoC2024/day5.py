@@ -83,7 +83,7 @@ def main():
     if test:
         data = test_case_1.strip().split("\n\n")
     else:
-        data = Day.get_data(day).strip().split("\n\n")
+        data = Day.get_data(2024, day).strip().split("\n\n")
 
     start = perf_counter()
     print(f"day {day} part 1: {part_one(*data)}  in {perf_counter() - start:.4f}s")
@@ -92,4 +92,5 @@ def main():
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
-main()
+if __name__ == "__main__":
+    main()

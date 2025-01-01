@@ -9,7 +9,7 @@ def part_one(data: list[str]) -> Union[str, int]:
     wires = []
     values = {}
     for value in start.split("\n"):
-        values[value[:value.index(":")]] = int(value[-1])
+        values[value[: value.index(":")]] = int(value[-1])
     conns = conns.split("\n")
     for conn in conns:
         op, out = conn.split(" -> ")
@@ -62,6 +62,7 @@ def part_two(data: list[str]) -> Union[str, int]:
         abr1, op, abr2 = wires[zab]
 
     pass
+
 
 def get_parent_rules(rules, target, depth=3):
     if depth == 0:
@@ -152,7 +153,7 @@ tnw OR pbm -> gnj"""
         print("TEST VALUES")
         data = test_case_1.strip().split("\n\n")
     else:
-        data = Day.get_data(day).strip().split("\n\n")
+        data = Day.get_data(2024, day).strip().split("\n\n")
 
     start = perf_counter()
     print(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
@@ -161,4 +162,5 @@ tnw OR pbm -> gnj"""
     print(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
-main()
+if __name__ == "__main__":
+    main()
