@@ -6,17 +6,73 @@ import logging
 
 logger = logging.getLogger("AoC")
 
+class Console:
+    def __init__(self, code):
+        self.past_instr = set()
+        self.instr = []
+        for instr in code:
+            op = instr[:instr.index(" ")]
+            operand = int(instr[instr.index(" ") + 1:])
+            self.instr.append((op, operand))
+        self.pc = 0
+        self.acc = 0
+
+    def run_one(self) -> None:
+        op, oper = self.instr[self.pc]
+        self.past_instr.add(self.pc)
+        match op:
+            case "nop":
+                self.pc += 1
+            case "acc":
+                self.acc += oper
+                self.pc += 1
+            case "jmp":
+                self.pc += oper
+
+
+
+    def loop_check(self) -> int:
+        self.pc = 0
+        self.past_instr = set()
+        self.acc = 0
+        while self.pc not in self.past_instr:
+            self.run_one()
+        return self.acc
+
+    def fix_instrs(self):
+        for ix, (op, oper) in enumerate(self.instr.copy()):
+            if op == "acc":
+                continue
+            if op == "nop":
+                self.instr[ix] = ("jmp", oper)
+            else:
+                self.instr[ix] = ("nop", oper)
+            try:
+                r = self.loop_check()
+            except IndexError:
+                return self.acc
+            self.instr[ix] = (op, oper)
 
 def part_one(data: list[str]) -> Union[str, int]:
-    return data
+    console = Console(data)
+    return console.loop_check()
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    pass
+    console = Console(data)
+    return console.fix_instrs()
 
 
 def main(test: bool = False):
-    test_case_1 = """"""
+    test_case_1 = """nop +0
+acc +1
+jmp +4
+acc +3
+jmp -3
+acc -99
+acc +1
+jmp -4
+acc +6"""
 
 
     day = 8
@@ -34,4 +90,4 @@ def main(test: bool = False):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()
