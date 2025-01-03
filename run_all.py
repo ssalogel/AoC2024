@@ -11,5 +11,5 @@ for year, days in years:
     for day in days:
         day()
 
-    print(f"year {year} ran in {perf_counter() - start_year} seconds")
-print(f"All of AoC ran in {perf_counter() - start} seconds")
+    print(f"year {year} ran in {perf_counter() - start_year:.4f} seconds")
+print(f"All of AoC ran in {perf_counter() - start:.4f} seconds")

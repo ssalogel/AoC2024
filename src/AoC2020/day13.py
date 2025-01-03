@@ -11,7 +11,7 @@ logger = logging.getLogger("AoC")
 def part_one(data: list[str]) -> Union[str, int]:
     start = int(data[0])
     times = [int(x) for x in data[1].split(",") if x != "x"]
-    wait = [x - (start%x) for x in times]
+    wait = [x - (start % x) for x in times]
     best = min(wait)
     return best * times[wait.index(best)]
 
@@ -20,8 +20,8 @@ def part_two(data: list[str]) -> Union[str, int]:
     buses = [(int(x), ix) for ix, x in enumerate(data[1].split(",")) if x != "x"]
     time = buses[0][0]
     for ix, (bus, delay) in enumerate(buses[1:]):
-        jmp = lcm(*[t for t, d in buses[:ix+1]])
-        while time % bus != (bus - delay)%bus:
+        jmp = lcm(*[t for t, d in buses[: ix + 1]])
+        while time % bus != (bus - delay) % bus:
             time += jmp
     return time
 
