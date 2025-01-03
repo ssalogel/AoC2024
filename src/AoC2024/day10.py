@@ -91,7 +91,6 @@ def main(test: bool = False):
 01329801
 10456732"""
 
-    
     day = 10
     if test:
         data = test_case_1.strip().split("\n")

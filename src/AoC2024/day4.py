@@ -116,7 +116,6 @@ SAXAMASAAA
 MAMMMXMMMM
 MXMXAXMASX"""
 
-    
     day = 4
     if test:
         data = test_case_1.strip().split("\n")

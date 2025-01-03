@@ -58,7 +58,6 @@ bwurrg
 brgr
 bbrgwb"""
 
-    
     day = 19
     if test:
         logger.info("TEST VALUES")

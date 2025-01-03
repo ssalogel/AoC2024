@@ -57,7 +57,6 @@ def main(test: bool = False):
 8 6 4 4 1
 1 3 6 7 9"""
 
-    
     day = 2
     if test:
         data = test_case_1.strip().split("\n")

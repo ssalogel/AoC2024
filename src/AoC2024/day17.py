@@ -121,7 +121,6 @@ Register C: 0
 
 Program: 0,1,5,4,3,0"""
 
-    
     day = 17
     if test:
         logger.info("TEST VALUES")

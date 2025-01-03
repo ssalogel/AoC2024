@@ -68,7 +68,6 @@ def main(test: bool = False):
 #.#.#
 #####"""
 
-    
     day = 25
     if test:
         logger.info("TEST VALUES")

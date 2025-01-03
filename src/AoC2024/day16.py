@@ -114,7 +114,6 @@ def main(test: bool = False):
 #################
 """
 
-    
     day = 16
     if test:
         logger.info("TEST VALUES")

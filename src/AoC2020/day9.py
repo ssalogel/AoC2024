@@ -62,7 +62,6 @@ def main(test: bool = False):
 309
 576"""
 
-
     day = 9
     if test:
         logger.info("TEST VALUES")
@@ -78,6 +77,7 @@ def main(test: bool = False):
     logger.info(f"day {day} part 2: {part_two(data, window)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
+
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.NOTSET, stream=sys.stdout) 
+    logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
     main()

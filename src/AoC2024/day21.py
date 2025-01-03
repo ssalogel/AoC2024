@@ -130,7 +130,6 @@ def main(test: bool = False):
 456A
 379A"""
 
-    
     day = 21
     if test:
         logger.info("TEST VALUES")

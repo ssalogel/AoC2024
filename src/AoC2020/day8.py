@@ -6,13 +6,14 @@ import logging
 
 logger = logging.getLogger("AoC")
 
+
 class Console:
     def __init__(self, code):
         self.past_instr = set()
         self.instr = []
         for instr in code:
-            op = instr[:instr.index(" ")]
-            operand = int(instr[instr.index(" ") + 1:])
+            op = instr[: instr.index(" ")]
+            operand = int(instr[instr.index(" ") + 1 :])
             self.instr.append((op, operand))
         self.pc = 0
         self.acc = 0
@@ -28,8 +29,6 @@ class Console:
                 self.pc += 1
             case "jmp":
                 self.pc += oper
-
-
 
     def loop_check(self) -> int:
         self.pc = 0
@@ -53,6 +52,7 @@ class Console:
                 return self.acc
             self.instr[ix] = (op, oper)
 
+
 def part_one(data: list[str]) -> Union[str, int]:
     console = Console(data)
     return console.loop_check()
@@ -74,7 +74,6 @@ acc +1
 jmp -4
 acc +6"""
 
-
     day = 8
     if test:
         logger.info("TEST VALUES")
@@ -87,6 +86,7 @@ acc +6"""
     mid = perf_counter()
     logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)

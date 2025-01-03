@@ -68,7 +68,7 @@ def part_two(data: list[str]) -> Union[str, int]:
 
 
 def main(test: bool = False):
-    
+
     test_case_1 = """....#.....
 .........#
 ..........

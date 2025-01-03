@@ -151,7 +151,6 @@ hwm AND bqk -> z03
 tgd XOR rvg -> z12
 tnw OR pbm -> gnj"""
 
-    
     day = 24
     if test:
         logger.info("TEST VALUES")

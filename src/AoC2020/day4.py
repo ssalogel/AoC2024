@@ -7,8 +7,10 @@ import logging
 
 logger = logging.getLogger("AoC")
 
+
 def is_hex(string: str) -> bool:
     return all(map(lambda x: x.lower() in "abcdef" or x.isnumeric, string))
+
 
 def is_valid_height(string: str) -> bool:
     if string.endswith("cm"):
@@ -19,6 +21,7 @@ def is_valid_height(string: str) -> bool:
         return 59 <= num <= 76
     return False
 
+
 def part_one(data: list[str]) -> Union[str, int]:
     tot = 0
     passports = [x.split() for x in data]
@@ -27,6 +30,7 @@ def part_one(data: list[str]) -> Union[str, int]:
         keys = {x[:3] for x in passport}
         tot += len(needed_keys.intersection(keys)) == len(needed_keys)
     return tot
+
 
 def part_two(data: list[str]) -> Union[str, int]:
     tot = 0
@@ -90,7 +94,6 @@ hgt:59cm ecl:zzz
 eyr:2038 hcl:74454a iyr:2023
 pid:3556412378 byr:2007"""
 
-    
     day = 4
     if test:
         logger.info("TEST VALUES")
@@ -104,6 +107,7 @@ pid:3556412378 byr:2007"""
     logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
+
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.NOTSET, stream=sys.stdout) 
+    logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
     main(True)

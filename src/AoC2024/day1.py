@@ -39,7 +39,6 @@ def main(test: bool = False):
     3   9
     3   3"""
 
-    
     day = 1
     if test:
         data = test_case_1.strip().split("\n")

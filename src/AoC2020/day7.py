@@ -10,6 +10,7 @@ from collections import defaultdict
 
 logger = logging.getLogger("AoC")
 
+
 def parse_bags(data: list[str]) -> tuple[dict[str, list[str]], dict[str, list[tuple[int, str]]]]:
     is_contained = defaultdict(list)
     containers = defaultdict(list)
@@ -19,8 +20,8 @@ def parse_bags(data: list[str]) -> tuple[dict[str, list[str]], dict[str, list[tu
         if contains == ["no other bag"]:
             continue
         for contain in contains:
-            num = int(contain[:contain.index(" ")])
-            bag = contain[contain.index(" ") + 1:]
+            num = int(contain[: contain.index(" ")])
+            bag = contain[contain.index(" ") + 1 :]
             is_contained[bag].append(container)
             containers[container].append((num, bag))
     return is_contained, containers
@@ -70,7 +71,6 @@ dark green bags contain 2 dark blue bags.
 dark blue bags contain 2 dark violet bags.
 dark violet bags contain no other bags."""
 
-
     day = 7
     if test:
         logger.info("TEST VALUES")
@@ -84,6 +84,7 @@ dark violet bags contain no other bags."""
     mid = perf_counter()
     logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)

@@ -70,7 +70,6 @@ def main(test: bool = False):
 21037: 9 7 18 13
 292: 11 6 16 20"""
 
-    
     day = 7
     if test:
         data = test_case_1.strip().split("\n")

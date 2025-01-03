@@ -52,7 +52,6 @@ def part_two(rules: list[str], updates: list[str]) -> Union[str, int]:
 
 
 def main(test: bool = False):
-    
 
     test_case_1 = """47|53
 97|13

@@ -89,7 +89,6 @@ wh-qp
 tb-vc
 td-yn"""
 
-    
     day = 23
     if test:
         logger.info("TEST VALUES")

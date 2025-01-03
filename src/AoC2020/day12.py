@@ -25,9 +25,9 @@ def part_one(data: list[str]) -> Union[str, int]:
             case "W":
                 boat -= value
             case "L":
-                direction = (direction - (value//90))%4
+                direction = (direction - (value // 90)) % 4
             case "R":
-                direction = (direction + (value//90))%4
+                direction = (direction + (value // 90)) % 4
             case "F":
                 boat += value * directions[direction]
 
@@ -53,10 +53,10 @@ def part_two(data: list[str]) -> Union[str, int]:
             case "W":
                 waypoint -= value
             case "L":
-                for _ in range(value//90):
+                for _ in range(value // 90):
                     waypoint *= 1j
             case "R":
-                for _ in range(value//90):
+                for _ in range(value // 90):
                     waypoint *= -1j
             case "F":
                 boat += value * waypoint
@@ -72,7 +72,6 @@ R90
 F11
 """
 
-    
     day = 12
     if test:
         logger.info("TEST VALUES")
@@ -86,7 +85,7 @@ F11
     logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
     main(False)
-

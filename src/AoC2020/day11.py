@@ -6,19 +6,21 @@ import logging
 
 logger = logging.getLogger("AoC")
 
+
 def get_grid(data: list[str]) -> dict[complex, bool]:
     grid = {}
     for j, row in enumerate(data):
         for i, seat in enumerate(row):
             if seat == ".":
                 continue
-            grid[i + j*1j] = False
+            grid[i + j * 1j] = False
     return grid
+
 
 def draw_grid(grid: dict[complex, bool], width: int, height: int) -> None:
     for j in range(height):
         for i in range(width):
-            pos = i + j*1j
+            pos = i + j * 1j
             if pos not in grid:
                 print(" ", end="")
             elif grid[pos]:
@@ -26,19 +28,22 @@ def draw_grid(grid: dict[complex, bool], width: int, height: int) -> None:
             else:
                 print("_", end="")
         print()
-    print("".join(["*"]*width))
+    print("".join(["*"] * width))
+
 
 def get_neigh(pos: complex) -> list[complex]:
-    return [pos -1j, pos + 1 - 1j, pos + 1, pos + 1 + 1j, pos + 1j, pos -1 + 1j, pos -1, pos -1 -1j]
+    return [pos - 1j, pos + 1 - 1j, pos + 1, pos + 1 + 1j, pos + 1j, pos - 1 + 1j, pos - 1, pos - 1 - 1j]
+
 
 def first_neighs_status(grid: dict[complex, bool], pos: complex, width: int, heigth: int) -> list[bool]:
-    directions = [-1j, 1 - 1j, 1, 1 + 1j, 1j, -1 + 1j, -1, -1 -1j]
+    directions = [-1j, 1 - 1j, 1, 1 + 1j, 1j, -1 + 1j, -1, -1 - 1j]
     for direction in directions:
         curr = pos + direction
         while curr not in grid and 0 <= curr.real < width and 0 <= curr.imag < heigth:
             curr += direction
         if curr in grid:
             yield grid[curr]
+
 
 def part_one(data: list[str]) -> Union[str, int]:
     grid = get_grid(data)
@@ -54,7 +59,7 @@ def part_one(data: list[str]) -> Union[str, int]:
             else:
                 occupied = not any(neigh_status)
             newgrid[pos] = occupied
-        #draw_grid(newgrid, width, height)
+        # draw_grid(newgrid, width, height)
         if grid == newgrid:
             break
         grid = newgrid
@@ -75,7 +80,7 @@ def part_two(data: list[str]) -> Union[str, int]:
             else:
                 occupied = not any(neigh_status)
             newgrid[pos] = occupied
-        #draw_grid(newgrid, width, height)
+        # draw_grid(newgrid, width, height)
         if grid == newgrid:
             break
         grid = newgrid
@@ -96,7 +101,6 @@ L.LLLLLL.L
 L.LLLLL.LL
 """
 
-
     day = 11
     if test:
         logger.info("TEST VALUES")
@@ -109,6 +113,7 @@ L.LLLLL.LL
     mid = perf_counter()
     logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)

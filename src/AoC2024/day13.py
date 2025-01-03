@@ -87,7 +87,6 @@ Button A: X+69, Y+23
 Button B: X+27, Y+71
 Prize: X=18641, Y=10279"""
 
-    
     day = 13
     if test:
         logger.info("TEST VALUES")

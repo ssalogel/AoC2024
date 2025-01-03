@@ -132,7 +132,6 @@ MIIIIIJJEE
 MIIISIJEEE
 MMMISSJEEE"""
 
-    
     day = 12
     if test:
         logger.info("TEST VALUES")

@@ -24,15 +24,15 @@ def variate_list(numbers: list[int]) -> list[int]:
     splited_on_3 = []
     prev = 0
     for ix in splits:
-        splited_on_3.append(numbers[prev:ix+1])
+        splited_on_3.append(numbers[prev : ix + 1])
         prev = ix + 1
-    #input max splited is of length 5, so 3 removables
+    # input max splited is of length 5, so 3 removables
     variations = []
     for splited in splited_on_3:
         if len(splited) < 3:
             continue
         if len(splited) == 3:
-            #0, 1, 2 -> no_change -- 0,2
+            # 0, 1, 2 -> no_change -- 0,2
             variations.append(2)
             continue
         if len(splited) == 4:
@@ -46,13 +46,13 @@ def variate_list(numbers: list[int]) -> list[int]:
         raise NotImplementedError
     return variations
 
+
 def part_two(data: list[str]) -> Union[str, int]:
     adapters = [int(x) for x in data]
     adapters.sort()
     adapters.insert(0, 0)
     adapters.append(adapters[-1] + 3)
     return prod(variate_list(adapters))
-
 
 
 def main(test: bool = False):
@@ -88,7 +88,6 @@ def main(test: bool = False):
 10
 3"""
 
-    
     day = 10
     if test:
         logger.info("TEST VALUES")
@@ -102,6 +101,7 @@ def main(test: bool = False):
     logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
+
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.NOTSET, stream=sys.stdout) 
+    logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
     main()

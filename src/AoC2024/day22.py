@@ -62,7 +62,6 @@ def main(test: bool = False):
 2
 AoC2024"""
 
-    
     day = 22
     if test:
         logger.info("TEST VALUES")

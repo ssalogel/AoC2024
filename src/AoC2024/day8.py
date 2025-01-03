@@ -72,7 +72,6 @@ def main(test: bool = False):
 ............
 ............"""
 
-    
     day = 8
     if test:
         data = test_case_1.strip().split("\n")

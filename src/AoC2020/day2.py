@@ -12,7 +12,11 @@ def part_one(data: list[str]) -> Union[str, int]:
     tot = 0
     for line in data:
         rule, password = line.split(": ", 1)
-        minshow, maxshow, letter = int(rule[:rule.index("-")]), int(rule[rule.index("-") + 1: rule.index(" ")]), rule[-1]
+        minshow, maxshow, letter = (
+            int(rule[: rule.index("-")]),
+            int(rule[rule.index("-") + 1 : rule.index(" ")]),
+            rule[-1],
+        )
         c = Counter(password)
         tot += minshow <= c[letter] <= maxshow
     return tot
@@ -22,16 +26,16 @@ def part_two(data: list[str]) -> Union[str, int]:
     tot = 0
     for line in data:
         rule, password = line.split(": ", 1)
-        pos1, pos2, letter = int(rule[:rule.index("-")]), int(rule[rule.index("-") + 1: rule.index(" ")]), rule[-1]
-        tot += (password[pos1-1] == letter) ^ (password[pos2-1] == letter)
+        pos1, pos2, letter = int(rule[: rule.index("-")]), int(rule[rule.index("-") + 1 : rule.index(" ")]), rule[-1]
+        tot += (password[pos1 - 1] == letter) ^ (password[pos2 - 1] == letter)
     return tot
+
 
 def main(test: bool = False):
     test_case_1 = """1-3 a: abcde
 1-3 b: cdefg
 2-9 c: ccccccccc"""
 
-    
     day = 2
     if test:
         logger.info("TEST VALUES")
@@ -44,6 +48,7 @@ def main(test: bool = False):
     mid = perf_counter()
     logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
