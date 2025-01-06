@@ -1,88 +1,57 @@
-from collections import defaultdict
 from typing import Union
 from time import perf_counter
 from src.utils import Day
 import sys
 import logging
-from operator import add
+from itertools import product
 
 logger = logging.getLogger("AoC")
 
 
-def get_neighs(pos: tuple[int,], dim: int = 3) -> list[tuple[int, int, int]]:
-    moves = [(-1,), (0,), (1,)]
-    curr_dim = 1
-    while curr_dim < dim:
-        move_up = []
-        for move in moves:
-            for dimension in (-1, 0, 1):
-                move_up.append(move + (dimension,))
-        moves = move_up
-        curr_dim += 1
+type Position = tuple[int,int,int] | tuple[int, int, int, int]
 
-    moves.remove(tuple(0 for _ in range(dim)))
-    res = []
-    for move in moves:
-        res.append(tuple(a + b for a,b in zip(move, pos)))
-    return res
+def get_neighs(pos: Position) -> list[Position]:
+    ranges = ((c-1, c, c+1) for c in pos)
+    yield from product(*ranges)
 
+
+def alive_nei(cube: set[Position], pos: Position) -> int:
+    nei_sum = sum(p in cube for p in get_neighs(pos))
+    nei_sum -= pos in cube
+    return nei_sum
+
+def all_nei(cube: set[Position]) -> set[Position]:
+    return set(x for p in cube for x in get_neighs(p))
+
+def cycle(cube: set[Position]) -> set[Position]:
+    new_cube = set()
+    for p in all_nei(cube):
+        nb_alive_nei = alive_nei(cube, p)
+        if nb_alive_nei == 3 or (nb_alive_nei == 2 and p in cube):
+            new_cube.add(p)
+    return new_cube
 
 def part_one(data: list[str], cycles: int) -> Union[str, int]:
-    grid = {}
-
-    for z in range(cycles * 2 + 1):
-        for y in range(len(data) +  cycles * 2):
-            for x in range(len(data[0]) + cycles * 2):
-                grid[(x, y, z)] = False
-
-
+    cube = set()
     for y, row in enumerate(data):
-        for x, p in enumerate(row):
-            if p == "#":
-                grid[(cycles + x, cycles + y, cycles)] = True
-
-    for cycle in range(cycles):
-        new_grid = {}
-        for k,v in grid.items():
-            nei = list(get_neighs(k))
-            nei_sum = sum(grid[pos] for pos in nei if pos in grid)
-            if v and nei_sum in (2, 3):
-                new_grid[k] = True
-            elif not v and nei_sum == 3:
-                new_grid[k] = True
-            else:
-                new_grid[k] = False
-        grid = new_grid
-    return sum(v for v in grid.values())
+        for x, cell in enumerate(row):
+            if cell == "#":
+                cube.add((x,y,0))
+    for _ in range(cycles):
+        cube = cycle(cube)
+    return len(cube)
 
 
 def part_two(data: list[str], cycles = 6) -> Union[str, int]:
-    grid = {}
-
-    for z in range(cycles * 2 + 1):
-        for y in range(len(data) + cycles * 2):
-            for x in range(len(data[0]) + cycles * 2):
-                for w in range(cycles * 2 + 1):
-                    grid[(x, y, z, w)] = False
-
+    cube = set()
     for y, row in enumerate(data):
-        for x, p in enumerate(row):
-            if p == "#":
-                grid[(cycles + x, cycles + y, cycles, cycles)] = True
+        for x, cell in enumerate(row):
+            if cell == "#":
+                cube.add((x,y,0,0))
 
-    for cycle in range(cycles):
-        new_grid = {}
-        for k, v in grid.items():
-            nei = list(get_neighs(k, 4))
-            nei_sum = sum(grid[pos] for pos in nei if pos in grid)
-            if v and nei_sum in (2, 3):
-                new_grid[k] = True
-            elif not v and nei_sum == 3:
-                new_grid[k] = True
-            else:
-                new_grid[k] = False
-        grid = new_grid
-    return sum(v for v in grid.values())
+    for _ in range(cycles):
+        cube = cycle(cube)
+    return len(cube)
 
 
 def main(test: bool = False):
