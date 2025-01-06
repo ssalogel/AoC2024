@@ -1,3 +1,4 @@
+from collections import defaultdict, Counter
 from typing import Union
 from time import perf_counter
 from src.utils import Day
@@ -7,16 +8,51 @@ import logging
 logger = logging.getLogger("AoC")
 
 
-def part_one(data: list[str]) -> Union[str, int]:
-    return data
+def get_allergens_possible_translations(data: list[str]) -> tuple[dict[str, set[str]], Counter[str]]:
+    allergens_translation = {}
+    amount = Counter()
+    for line in data:
+        unknowns, allergens = line.replace(")", "").split(" (contains ", 1)
+        unknowns = set(unknowns.split(" "))
+        amount.update(unknowns)
+        allergens = allergens.split(", ")
+        for allergen in allergens:
+            if allergen not in allergens_translation:
+                allergens_translation[allergen] = unknowns.copy()
+            else:
+                allergens_translation[allergen].intersection_update(unknowns)
+    return allergens_translation, amount
 
+
+def part_one(data: list[str]) -> Union[str, int]:
+    allergens_translation, amount = get_allergens_possible_translations(data)
+    know_unknown_words = set(amount.keys())
+    for v in allergens_translation.values():
+        know_unknown_words.difference_update(v)
+    return sum(amount[c] for c in know_unknown_words)
 
 def part_two(data: list[str]) -> Union[str, int]:
-    pass
+    allergens_translation, _ = get_allergens_possible_translations(data)
+    translated = set()
+    while len(translated) < len(allergens_translation):
+        for word, translations in allergens_translation.items():
+            if len(translations) == 1:
+                translated |= translations
+                continue
+            allergens_translation[word] -= translated
+    solution = [(w, t.pop()) for w,t in allergens_translation.items()]
+    solution.sort()
+    return ','.join([t for _,t in solution])
+
+
+
 
 
 def main(test: bool = False):
-    test_case_1 = """"""
+    test_case_1 = """mxmxvkd kfcds sqjhc nhms (contains dairy, fish)
+trh fvjkl sbzzf mxmxvkd (contains dairy)
+sqjhc fvjkl (contains soy)
+sqjhc mxmxvkd sbzzf (contains fish)"""
 
     day = 21
     if test:
@@ -34,4 +70,4 @@ def main(test: bool = False):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()
