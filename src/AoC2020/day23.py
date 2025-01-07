@@ -7,6 +7,7 @@ from math import prod
 
 logger = logging.getLogger("AoC")
 
+
 def print_cups(cups: list[int], curr, limit: int = 9) -> list[int]:
     res = []
     for _ in range(min(len(cups) - 1, limit)):
@@ -35,6 +36,7 @@ def cycle(num: int, cups: list[int], start: int) -> list[int]:
         curr = cups[curr]
     return cups
 
+
 def part_one(data: list[str]) -> Union[str, int]:
     values = [int(x) for x in data[0]]
     cups = [0] * (len(values) + 1)
@@ -42,7 +44,6 @@ def part_one(data: list[str]) -> Union[str, int]:
         cups[prev] = curr
     cups[values[-1]] = values[0]
     return "".join(str(x) for x in print_cups(cycle(100, cups, values[0]), 1, 8))
-
 
 
 def part_two(data: list[str]) -> Union[str, int]:
@@ -55,7 +56,6 @@ def part_two(data: list[str]) -> Union[str, int]:
     cups[-1] = values[0]
     c = cycle(10_000_000, cups, values[0])
     return prod(print_cups(cups, 1, 2))
-
 
 
 def main(test: bool = False):

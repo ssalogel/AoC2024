@@ -10,18 +10,20 @@ logger = logging.getLogger("AoC")
 type Category = tuple[str, list[int]]
 type Ticket = list[int]
 
+
 def get_categories(cats: list[str]) -> list[Category]:
     categories = []
     for c in cats:
-        name = c[:c.index(":")]
-        constraint1 = c[c.index(":")+2:c.index(" or")]
-        lim_min_1 = int(constraint1[:constraint1.index("-")])
-        lim_max_1 = int(constraint1[constraint1.index("-")+1:])
-        constraint2 = c[c.rindex(" ") + 1:]
-        lim_min_2 = int(constraint2[:constraint2.index("-")])
-        lim_max_2 = int(constraint2[constraint2.index("-")+1:])
+        name = c[: c.index(":")]
+        constraint1 = c[c.index(":") + 2 : c.index(" or")]
+        lim_min_1 = int(constraint1[: constraint1.index("-")])
+        lim_max_1 = int(constraint1[constraint1.index("-") + 1 :])
+        constraint2 = c[c.rindex(" ") + 1 :]
+        lim_min_2 = int(constraint2[: constraint2.index("-")])
+        lim_max_2 = int(constraint2[constraint2.index("-") + 1 :])
         categories.append((name, set(range(lim_min_1, lim_max_1 + 1)).union(set(range(lim_min_2, lim_max_2 + 1)))))
     return categories
+
 
 def parse_data(data: list[str]) -> tuple[list[Category], Ticket, list[Ticket]]:
     cats = data[0].split("\n")
@@ -58,7 +60,7 @@ def part_two(data: list[str]) -> Union[str, int]:
                 break
         else:
             valid.append(ticket)
-    potentials = [[True for c,_ in cats] for _ in cats]
+    potentials = [[True for c, _ in cats] for _ in cats]
     for ticket in valid:
         for ix, m in enumerate(ticket):
             for jx, cat in enumerate(cats):

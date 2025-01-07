@@ -31,6 +31,7 @@ def part_one(data: list[str]) -> Union[str, int]:
         know_unknown_words.difference_update(v)
     return sum(amount[c] for c in know_unknown_words)
 
+
 def part_two(data: list[str]) -> Union[str, int]:
     allergens_translation, _ = get_allergens_possible_translations(data)
     translated = set()
@@ -40,12 +41,9 @@ def part_two(data: list[str]) -> Union[str, int]:
                 translated |= translations
                 continue
             allergens_translation[word] -= translated
-    solution = [(w, t.pop()) for w,t in allergens_translation.items()]
+    solution = [(w, t.pop()) for w, t in allergens_translation.items()]
     solution.sort()
-    return ','.join([t for _,t in solution])
-
-
-
+    return ",".join([t for _, t in solution])
 
 
 def main(test: bool = False):

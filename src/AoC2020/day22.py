@@ -31,15 +31,16 @@ def part_one(data: list[str]) -> Union[str, int]:
             p2.append(c2)
             p2.append(c1)
     winner = max(p1, p2, key=len)
-    return sum(i * x for i,x in enumerate(reversed(winner), 1))
+    return sum(i * x for i, x in enumerate(reversed(winner), 1))
 
 
 def part_two(data: list[str]) -> Union[str, int]:
     p1, p2 = parse_deck(data)
+
     def play(p1: deque[int], p2: deque[int]) -> tuple[int, deque[int]]:
         recur_break = set()
         while len(p1) > 0 and len(p2) > 0:
-            recur_check = (tuple(p1),tuple(p2))
+            recur_check = (tuple(p1), tuple(p2))
             if recur_check in recur_break:
                 return 1, p1
             recur_break.add(recur_check)
@@ -55,7 +56,7 @@ def part_two(data: list[str]) -> Union[str, int]:
                 p2.extend((c2, c1))
         return (True, p1) if p1 else (False, p2)
 
-    return sum(i * x for i,x in enumerate(reversed(play(p1, p2)[1]), 1))
+    return sum(i * x for i, x in enumerate(reversed(play(p1, p2)[1]), 1))
 
 
 def main(test: bool = False):

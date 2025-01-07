@@ -7,7 +7,7 @@ import logging
 logger = logging.getLogger("AoC")
 
 
-def get_parenth_level(equation: list[int|str]) -> list[int]:
+def get_parenth_level(equation: list[int | str]) -> list[int]:
     parenth_level = []
     level = 0
     for c in equation:
@@ -18,7 +18,8 @@ def get_parenth_level(equation: list[int|str]) -> list[int]:
         parenth_level.append(level)
     return parenth_level
 
-def calc_eq(equation: list[str|int]) -> int:
+
+def calc_eq(equation: list[str | int]) -> int:
     if len(equation) % 2 != 1:
         raise NotImplementedError
     if len(equation) == 1:
@@ -36,7 +37,7 @@ def calc_eq(equation: list[str|int]) -> int:
             return calc_eq([int(equation[0]) * int(equation[2])] + equation[3:])
 
 
-def calc_eq2(equation: list[str|int]) -> int:
+def calc_eq2(equation: list[str | int]) -> int:
     if len(equation) % 2 != 1:
         raise NotImplementedError
     if len(equation) == 1:
@@ -53,19 +54,21 @@ def calc_eq2(equation: list[str|int]) -> int:
         elif plus == 1:
             return calc_eq2([int(equation[0]) + int(equation[2])] + equation[3:])
 
-        return calc_eq2(equation[:plus - 1] + [int(equation[plus - 1]) + int(equation[plus + 1])] + equation[plus+2:])
+        return calc_eq2(
+            equation[: plus - 1] + [int(equation[plus - 1]) + int(equation[plus + 1])] + equation[plus + 2 :]
+        )
 
 
-def solve_equation(equation: list[str], resolver: Callable[[list[str|int]], int]) -> int:
+def solve_equation(equation: list[str], resolver: Callable[[list[str | int]], int]) -> int:
     parenth = get_parenth_level(equation)
     if max(parenth) == 0:
         return resolver(equation)
     start_p = parenth.index(max(parenth))
     i = start_p
     while parenth[i] == max(parenth):
-        i+=1
-    solv = resolver(equation[start_p+1:i])
-    equation = equation[:start_p] + [solv] + equation[i+1:]
+        i += 1
+    solv = resolver(equation[start_p + 1 : i])
+    equation = equation[:start_p] + [solv] + equation[i + 1 :]
     return solve_equation(equation, resolver)
 
 

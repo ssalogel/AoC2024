@@ -8,7 +8,19 @@ import logging
 
 logger = logging.getLogger("AoC")
 
-def parse_rules(inp: list[str]) -> dict[int, list[tuple[int,]|tuple[int,int,]|tuple[int,int,int]]|str]:
+
+def parse_rules(inp: list[str]) -> dict[
+    int,
+    list[
+        tuple[int,]
+        | tuple[
+            int,
+            int,
+        ]
+        | tuple[int, int, int]
+    ]
+    | str,
+]:
     rules = {}
     for line in inp:
         num, options = line.split(": ")
@@ -23,7 +35,6 @@ def parse_rules(inp: list[str]) -> dict[int, list[tuple[int,]|tuple[int,int,]|tu
     return rules
 
 
-
 def part_one(data: list[str]) -> Union[str, int]:
     rules = parse_rules(data[0].split("\n"))
 
@@ -35,7 +46,7 @@ def part_one(data: list[str]) -> Union[str, int]:
             return rule
         options = []
         for option in rule:
-            r = ''
+            r = ""
             for sub_rule in option:
                 r += build_regex(sub_rule)
             options.append(r)
@@ -51,7 +62,8 @@ def part_two(data: list[str]) -> Union[str, int]:
     rules = parse_rules(data[0].split("\n"))
     rules[8] = [(42,), (42, 8)]
     rules[11] = [(42, 31), (42, 11, 31)]
-    #special rules : top of the tree can be cyclic:
+
+    # special rules : top of the tree can be cyclic:
     # 0: 8 11
     # 8: 42 | 42 8
     # 11: 42 31 | 42 11 31
@@ -81,7 +93,8 @@ def part_two(data: list[str]) -> Union[str, int]:
             matches += sub_match
         return matches
 
-    return sum([len(x) in match(x) for x in data[1].split('\n')])
+    return sum([len(x) in match(x) for x in data[1].split("\n")])
+
 
 def main(test: bool = False):
     test_case_1 = """42: 9 14 | 10 1
