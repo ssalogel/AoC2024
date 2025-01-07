@@ -1,3 +1,4 @@
+from os import cpu_count
 from typing import Union
 from time import perf_counter
 from src.utils import Day
@@ -7,18 +8,37 @@ import logging
 logger = logging.getLogger("AoC")
 
 
+def get_loop_size(pub_key: int, subject_number: int = 7, mod: int = 20201227) -> int:
+    value = 1
+    count = 0
+    while value != pub_key:
+        count += 1
+        value = value * subject_number % mod
+    return count
+
+
+def get_encr_key(loop_size: int, pub_key: int) -> int:
+    value = 1
+    for _ in range(loop_size):
+        value = value * pub_key % 20201227
+    return value
+
+
 def part_one(data: list[str]) -> Union[str, int]:
-    return data
+    card, door = list(map(int, data))
+    c_loop_size = get_loop_size(card)
+    d_loop_size = get_loop_size(door)
+    c_encr = get_encr_key(d_loop_size, card)
+    d_encr = get_encr_key(c_loop_size, door)
 
-
-def part_two(data: list[str]) -> Union[str, int]:
-    pass
+    return c_encr
 
 
 def main(test: bool = False):
-    test_case_1 = """"""
+    test_case_1 = """5_764_801
+17_807_724"""
 
-    day = 1
+    day = 25
     if test:
         logger.info("TEST VALUES")
         data = test_case_1.strip().split("\n")
@@ -27,11 +47,9 @@ def main(test: bool = False):
 
     start = perf_counter()
     logger.info(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
-    mid = perf_counter()
-    logger.info(f"day {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()
