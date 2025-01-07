@@ -137,10 +137,10 @@ p=9,5 v=-3,-3"""
         height = 103
 
     start = perf_counter()
-    logger.info(f"day {day} part 1: {part_one(data, width, height)}  in {perf_counter() - start:.4f}s")
+    logger.info(f"\t\tday {day} part 1: {part_one(data, width, height)}  in {perf_counter() - start:.4f}s")
     mid = perf_counter()
-    logger.info(f"day {day} part 2: {part_two(data,  width, height)} in {perf_counter() - mid:.4f}s")
-    logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
+    logger.info(f"\t\tday {day} part 2: {part_two(data,  width, height)} in {perf_counter() - mid:.4f}s")
+    logger.warning(f"\tthe whole day {day} took {perf_counter() - start:.4f}s")
 
 
 if __name__ == "__main__":

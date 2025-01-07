@@ -46,8 +46,8 @@ def main(test: bool = False):
         data = Day.get_data(2020, day).strip().split("\n")
 
     start = perf_counter()
-    logger.info(f"day {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
-    logger.info(f"the whole day {day} took {perf_counter() - start:.4f}s")
+    logger.info(f"\t\tday {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
+    logger.warning(f"\tthe whole day {day} took {perf_counter() - start:.4f}s")
 
 
 if __name__ == "__main__":
