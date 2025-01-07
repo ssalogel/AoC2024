@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import Union
 from time import perf_counter
 from src.utils import Day
@@ -75,6 +76,61 @@ def djikstra(grid: dict[complex, str], start: complex):
     return costs
 
 
+def build_neigh_map(data: list[str]) -> tuple[dict[complex, list[complex]], complex, complex]:
+    grid = data_to_map(data)
+    nei_grid = defaultdict(list)
+    start = end = 0
+    for j, row in enumerate(reversed(data)):
+        for i, char in enumerate(row):
+            pos = i + j * 1j
+            if char == "S":
+                start = pos
+            if char == "E":
+                end = pos
+            for nei in [pos + 1, pos - 1, pos + 1j, pos - 1j]:
+                if grid[pos] != "#":
+                    nei_grid[pos].append(nei)
+    return nei_grid, start, end
+
+
+def explore(start, end, nei_grid, direction) -> int:
+    count = 0
+    q = [(0, count, start, direction, frozenset([start]))]
+    distance = defaultdict(lambda: float("inf"))
+    best_path_points = set()
+    best = float("inf")
+
+    while q:
+        score, _, pos, direction, path = heappop(q)
+        if pos == end:
+            if score < best:
+                best = score
+                best_path_points = path
+            elif score == best:
+                best_path_points |= path
+            continue
+
+        k = pos, direction
+        if distance[k] < score:
+            continue
+
+        distance[k] = score
+
+        for nei in nei_grid[pos]:
+            if nei in path:
+                continue
+
+            dir2 = nei - pos
+            turn_cost = 0
+            if dir2 != direction:
+                turn_cost = 1000
+            if dir2 + direction == 0:
+                turn_cost = 2000
+            count += 1
+            heappush(q, (score + 1 + turn_cost, count, nei, dir2, path | {nei}))
+    return len(best_path_points)
+
+
 def part_one(data: list[str]) -> Union[str, int]:
     grid = data_to_map(data)
     reindeer = target = 0
@@ -88,10 +144,8 @@ def part_one(data: list[str]) -> Union[str, int]:
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    paths = get_all_path(data)
-    s = set()
-    [s.update(x) for x in paths]
-    return len(s)
+    nei_grid, start, end = build_neigh_map(data)
+    return explore(start, end, nei_grid, 1)
 
 
 def main(test: bool = False):
