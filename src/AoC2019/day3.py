@@ -6,6 +6,7 @@ import logging
 
 logger = logging.getLogger("AoC")
 
+
 def get_wire_positions(wire: list[tuple[str, int]]) -> dict[complex, int]:
     positions = {}
     pos = c = 0
@@ -17,8 +18,10 @@ def get_wire_positions(wire: list[tuple[str, int]]) -> dict[complex, int]:
             if pos in positions:
                 continue
             positions[pos] = c
-    if 0 in positions: positions.pop(0)
+    if 0 in positions:
+        positions.pop(0)
     return positions
+
 
 def part_one(data: list[str]) -> Union[str, int]:
     wires = []

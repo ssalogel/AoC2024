@@ -9,7 +9,7 @@ logger = logging.getLogger("AoC")
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    code = list(map(int, data[0].split(',')))
+    code = list(map(int, data[0].split(",")))
     code[1] = 12
     code[2] = 2
     comp = IntCode(code)
@@ -18,7 +18,7 @@ def part_one(data: list[str]) -> Union[str, int]:
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    code = list(map(int, data[0].split(',')))
+    code = list(map(int, data[0].split(",")))
     for a in range(100):
         for b in range(100):
             code[1] = a
