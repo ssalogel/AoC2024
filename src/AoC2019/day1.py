@@ -8,15 +8,24 @@ logger = logging.getLogger("AoC")
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    return data
+    return sum([int(x)//3-2 for x in data])
+
+def get_fuel_req(mass: int) -> int:
+    fuel = max(0, mass//3-2)
+    if fuel:
+        return get_fuel_req(fuel) + fuel
+    return fuel
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    pass
+    return sum([get_fuel_req(int(x)) for x in data])
 
 
 def main(test: bool = False):
-    test_case_1 = """"""
+    test_case_1 = """12
+14
+1969
+100756"""
 
     day = 1
     if test:
@@ -34,4 +43,4 @@ def main(test: bool = False):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()
