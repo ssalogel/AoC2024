@@ -8,11 +8,49 @@ logger = logging.getLogger("AoC")
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    return data
+    a, b = data[0].split("-")
+    a = int(a)
+    b = int(b) + 1
+    c = 0
+    for num in range(a, b):
+        d_6, d_5, d_4, d_3, d_2, d_1 = (
+            num // 100_000,
+            num // 10_000 % 10,
+            num // 1_000 % 10,
+            num // 100 % 10,
+            num // 10 % 10,
+            num % 10,
+        )
+        if d_6 <= d_5 <= d_4 <= d_3 <= d_2 <= d_1:
+            if d_6 == d_5 or d_5 == d_4 or d_4 == d_3 or d_3 == d_2 or d_2 == d_1:
+                c += 1
+    return c
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    pass
+    a, b = data[0].split("-")
+    a = int(a)
+    b = int(b) + 1
+    c = 0
+    for num in range(a, b):
+        d_6, d_5, d_4, d_3, d_2, d_1 = (
+            num // 100_000,
+            num // 10_000 % 10,
+            num // 1_000 % 10,
+            num // 100 % 10,
+            num // 10 % 10,
+            num % 10,
+        )
+        if d_6 <= d_5 <= d_4 <= d_3 <= d_2 <= d_1:
+            if (
+                d_6 == d_5 != d_4
+                or d_6 != d_5 == d_4 != d_3
+                or d_5 != d_4 == d_3 != d_2
+                or d_4 != d_3 == d_2 != d_1
+                or d_3 != d_2 == d_1
+            ):
+                c += 1
+    return c
 
 
 def main(test: bool = False):
@@ -36,4 +74,4 @@ def main(test: bool = False):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()
