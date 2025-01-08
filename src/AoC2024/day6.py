@@ -45,7 +45,7 @@ def part_two(data: list[str]) -> Union[str, int]:
         n_guard = guard
         visited = set()
 
-        while grid[guard] != "_":
+        while grid[n_guard] != "_":
             if (n_guard, move) in visited:
                 total += 1
                 break
