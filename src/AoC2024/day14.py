@@ -142,6 +142,8 @@ p=9,5 v=-3,-3"""
     logger.info(f"\t\tday {day} part 2: {part_two(data,  width, height)} in {perf_counter() - mid:.4f}s")
     logger.warning(f"\tthe whole day {day} took {perf_counter() - start:.4f}s")
 
+    return perf_counter() - start
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)

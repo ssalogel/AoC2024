@@ -1,4 +1,3 @@
-from os import cpu_count
 from typing import Union
 from time import perf_counter
 from src.utils import Day
@@ -48,6 +47,8 @@ def main(test: bool = False):
     start = perf_counter()
     logger.info(f"\t\tday {day} part 1: {part_one(data)}  in {perf_counter() - start:.4f}s")
     logger.warning(f"\tthe whole day {day} took {perf_counter() - start:.4f}s")
+
+    return perf_counter() - start
 
 
 if __name__ == "__main__":

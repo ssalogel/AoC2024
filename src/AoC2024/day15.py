@@ -6,6 +6,8 @@ import logging
 
 logger = logging.getLogger("AoC")
 
+# todo fixup this one with the Grid utility and better encapsulation of the recursive functions
+
 
 def move(grid, start, direction) -> tuple[bool, tuple[int, int]]:
     new_x = start[0] + direction[0]
@@ -132,7 +134,9 @@ v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^"""
     logger.info(f"\t\tday {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.warning(f"\tthe whole day {day} took {perf_counter() - start:.4f}s")
 
+    return perf_counter() - start
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()

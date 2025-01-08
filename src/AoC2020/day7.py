@@ -85,6 +85,8 @@ dark violet bags contain no other bags."""
     logger.info(f"\t\tday {day} part 2: {part_two(data)} in {perf_counter() - mid:.4f}s")
     logger.warning(f"\tthe whole day {day} took {perf_counter() - start:.4f}s")
 
+    return perf_counter() - start
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
