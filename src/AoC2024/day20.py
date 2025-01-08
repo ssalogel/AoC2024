@@ -10,10 +10,11 @@ from math import isnan
 
 logger = logging.getLogger("AoC")
 
-def bfs(grid: dict[complex, str], start: complex) -> dict[complex, int|float]:
+
+def bfs(grid: dict[complex, str], start: complex) -> dict[complex, int | float]:
     visited = set()
     to_visit = [(start, 0)]
-    costs: dict[complex, int|float] = defaultdict(lambda: float("inf"))
+    costs: dict[complex, int | float] = defaultdict(lambda: float("inf"))
     while to_visit:
         pos, cost = to_visit.pop(0)
         costs[pos] = cost

@@ -5,6 +5,7 @@ from src.utils import Day
 import sys
 import logging
 from src.utils.Grids import data_to_grid, get_neighbors4
+
 logger = logging.getLogger("AoC")
 from heapq import heappop, heappush
 from math import inf

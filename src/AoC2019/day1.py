@@ -8,10 +8,11 @@ logger = logging.getLogger("AoC")
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    return sum([int(x)//3-2 for x in data])
+    return sum([int(x) // 3 - 2 for x in data])
+
 
 def get_fuel_req(mass: int) -> int:
-    fuel = max(0, mass//3-2)
+    fuel = max(0, mass // 3 - 2)
     if fuel:
         return get_fuel_req(fuel) + fuel
     return fuel
