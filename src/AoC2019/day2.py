@@ -3,20 +3,33 @@ from time import perf_counter
 from src.utils import Day
 import sys
 import logging
+from IntCode import IntCode
 
 logger = logging.getLogger("AoC")
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    return data
+    code = list(map(int, data[0].split(',')))
+    code[1] = 12
+    code[2] = 2
+    comp = IntCode(code)
+    comp.run_until_end()
+    return comp.code[0]
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    pass
+    code = list(map(int, data[0].split(',')))
+    for a in range(100):
+        for b in range(100):
+            code[1] = a
+            code[2] = b
+            comp = IntCode(code).run_until_end()
+            if comp.code[0] == 19690720:
+                return 100 * a + b
 
 
 def main(test: bool = False):
-    test_case_1 = """"""
+    test_case_1 = """1,9,10,3,2,3,11,0,99,30,40,50"""
 
     day = 2
     if test:
@@ -36,4 +49,4 @@ def main(test: bool = False):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()
