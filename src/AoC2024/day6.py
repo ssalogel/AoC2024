@@ -2,16 +2,17 @@ from typing import Union
 from src.utils import Day
 import sys
 import logging
-
-logger = logging.getLogger("AoC")
-from collections import defaultdict
+from src.utils.Grids import data_to_grid
 from time import perf_counter
 
 
-def get_visited(grid: dict[complex, str], width, height, guard: complex) -> set[complex]:
+logger = logging.getLogger("AoC")
+
+
+def get_visited(grid: dict[complex, str], guard: complex) -> set[complex]:
     visited = set()
     move = 1j
-    while 0 <= guard.real < width and 0 <= guard.imag < height:
+    while grid[guard] != "_":
         visited.add(guard)
         while grid[guard + move] == "#":
             move *= -1j
@@ -19,34 +20,24 @@ def get_visited(grid: dict[complex, str], width, height, guard: complex) -> set[
     return visited
 
 
-def data_to_map(data: list[str]) -> dict[complex, str]:
-    d = defaultdict(lambda: "_")
-    d.update([(x + y * 1j, letter) for y, line in enumerate(reversed(data)) for x, letter in enumerate(line)])
-    return d
-
-
 def part_one(data: list[str]) -> Union[str, int]:
-    width = len(data)
-    heigth = len(data[0])
-    grid = data_to_map(data)
+    grid = data_to_grid(data, default_value="_")
     for pos, value in grid.items():
         if "^" == value:
             guard = pos
             break
-    return len(get_visited(grid, width, heigth, guard))
+    return len(get_visited(grid, guard))
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    width = len(data)
-    height = len(data[0])
-    grid = data_to_map(data)
+    grid = data_to_grid(data, default_value="_")
     total = 0
     for pos, value in grid.items():
         if "^" == value:
             guard = pos
             break
 
-    for pos in get_visited(grid, width, height, guard):
+    for pos in get_visited(grid, guard):
         if grid[pos] in ["^", "#"]:
             continue
         grid[pos] = "#"
@@ -54,7 +45,7 @@ def part_two(data: list[str]) -> Union[str, int]:
         n_guard = guard
         visited = set()
 
-        while 0 <= n_guard.real < width and 0 <= n_guard.imag < height:
+        while grid[guard] != "_":
             if (n_guard, move) in visited:
                 total += 1
                 break
@@ -96,4 +87,4 @@ def main(test: bool = False):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()

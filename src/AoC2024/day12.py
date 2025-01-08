@@ -26,11 +26,11 @@ def data_to_map(data: list[str]) -> dict[complex, GardenPlot]:
     )
 
 
-def get_neigh(garden, gardenplot: GardenPlot, width, height, uncheck=False) -> list[complex]:
+def get_neigh(garden, gardenplot: GardenPlot, uncheck=False) -> list[complex]:
     neigh = []
     for d in [1, 1j, -1, -1j]:
         pos = gardenplot.pos + d
-        if uncheck or (0 <= pos.real < width and 0 <= pos.imag < height):
+        if uncheck or pos in garden:
             neigh.append(pos)
     return neigh
 
@@ -38,65 +38,45 @@ def get_neigh(garden, gardenplot: GardenPlot, width, height, uncheck=False) -> l
 def bfs(
     garden: dict[complex, GardenPlot],
     start: GardenPlot,
-    width: int,
-    height: int,
     visited: set[complex] = None,
 ) -> set[complex]:
     if visited is None:
         visited = set()
     visited.add(start.pos)
-    neighbors = get_neigh(garden, start, width, height, True)
+    neighbors = get_neigh(garden, start, True)
     fences = [x not in garden or start.plant != garden[x].plant for x in neighbors]
     corners = [x and y for x, y in zip(fences, fences[1:] + [fences[0]])]
     start.corner = sum(corners)
+    n, e, s, w = start.pos + 1j, start.pos + 1, start.pos - 1j, start.pos - 1
+    sw, nw, ne, se = s + w - start.pos, n + w - start.pos, n + e - start.pos, s + e - start.pos
+    d_corners = [sw, se, ne, nw]
     if start.corner == 1:
-        for i, c in enumerate(corners):
+        for d, c in zip(d_corners, corners):
             if not c:
                 continue
-            if i == 0 and (start.pos - 1 - 1j) in garden:
-                start.corner += garden[(start.pos - 1 - 1j)].plant != start.plant
-            if i == 1 and (start.pos + 1 - 1j) in garden:
-                start.corner += garden[(start.pos + 1 - 1j)].plant != start.plant
-            if i == 2 and (start.pos + 1 + 1j) in garden:
-                start.corner += garden[(start.pos + 1 + 1j)].plant != start.plant
-            if i == 3 and (start.pos - 1 + 1j) in garden:
-                start.corner += garden[(start.pos - 1 + 1j)].plant != start.plant
+            start.corner += d in garden and garden[d].plant != start.plant
     if start.corner == 0:
-        if (start.pos - 1 - 1j) in garden and garden[start.pos - 1].plant == start.plant == garden[
-            start.pos - 1j
-        ].plant:
-            start.corner += garden[(start.pos - 1 - 1j)].plant != start.plant
-        if (start.pos + 1 - 1j) in garden and garden[start.pos + 1].plant == start.plant == garden[
-            start.pos - 1j
-        ].plant:
-            start.corner += garden[(start.pos + 1 - 1j)].plant != start.plant
-        if (start.pos + 1 + 1j) in garden and garden[start.pos + 1].plant == start.plant == garden[
-            start.pos + 1j
-        ].plant:
-            start.corner += garden[(start.pos + 1 + 1j)].plant != start.plant
-        if (start.pos - 1 + 1j) in garden and garden[start.pos - 1].plant == start.plant == garden[
-            start.pos + 1j
-        ].plant:
-            start.corner += garden[(start.pos - 1 + 1j)].plant != start.plant
-    for neigh in get_neigh(garden, start, width, height):
+        for corner, side_a, side_b in [(sw, s, w), (nw, n, w), (ne, n, e), (se, s, e)]:
+            if corner in garden and garden[side_a].plant == start.plant == garden[side_b].plant:
+                start.corner += garden[corner].plant != start.plant
+    for neigh in get_neigh(garden, start):
         if neigh in visited:
             continue
         if garden[neigh].plant == start.plant:
-            bfs(garden, garden[neigh], width, height, visited)
+            bfs(garden, garden[neigh], visited)
 
     return visited
 
 
 def part_one(data: list[str]) -> Union[str, int]:
     garden = data_to_map(data)
-    width = len(data[0])
-    height = len(data)
+
     for pos, plot in garden.items():
         if plot.area == 0:
-            section = bfs(garden, plot, width, height)
+            section = bfs(garden, plot)
             for plant in section:
                 garden[plant].area = len(section)
-        neighbors = get_neigh(garden, plot, width, height)
+        neighbors = get_neigh(garden, plot)
         plot.fences = 4 - len(neighbors)
         for neigh in neighbors:
             if garden[neigh].plant != plot.plant:
@@ -107,12 +87,10 @@ def part_one(data: list[str]) -> Union[str, int]:
 
 def part_two(data: list[str]) -> Union[str, int]:
     garden = data_to_map(data)
-    width = len(data[0])
-    height = len(data)
     total = 0
     for pos, plot in garden.items():
         if plot.area == 0:
-            section = bfs(garden, plot, width, height)
+            section = bfs(garden, plot)
             # total.append((plot.plant, len(section), sum(garden[x].corner for x in section)))
             total += len(section) * sum(garden[x].corner for x in section)
             for plant in section:
@@ -148,4 +126,4 @@ MMMISSJEEE"""
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()

@@ -1,6 +1,6 @@
 from time import perf_counter
 from typing import Union
-
+from src.utils.Grids import data_to_grid
 from src.utils import Day
 import sys
 import logging
@@ -9,39 +9,34 @@ logger = logging.getLogger("AoC")
 
 
 def to_map(data: list[str]) -> dict[complex, dict[str, int | set[complex]]]:
-    res = {}
-    for y, row in enumerate(reversed(data)):
-        for x, digit in enumerate(row):
-            res[x + 1j * y] = {"height": int(digit), "score": set()}
+    res = data_to_grid(data)
+    for k, v in res.items():
+        res[k] = {"height": int(v), "score": set()}
     return res
 
 
-def get_neigh_score(
-    top_map: dict[complex, dict[str, int | set]], pos: complex, width: int, height: int
-) -> set[complex]:
+def get_neigh_score(top_map: dict[complex, dict[str, int | set]], pos: complex) -> set[complex]:
     d = 1j
     target_height = top_map[pos]["height"] + 1
     scores = set()
     for _ in range(4):
         d *= -1j
         neigh = pos + d
-        if 0 > neigh.real or neigh.real >= width or 0 > neigh.imag or neigh.imag >= height:
+        if neigh not in top_map:
             continue
         if top_map[neigh]["height"] == target_height:
             scores.update(top_map[neigh]["score"])
     return scores
 
 
-def get_neigh_trails(
-    top_map: dict[complex, dict[str, int | set]], pos: complex, width: int, height: int
-) -> set[complex]:
+def get_neigh_trails(top_map: dict[complex, dict[str, int | set]], pos: complex) -> set[complex]:
     d = 1j
     target_height = top_map[pos]["height"] + 1
     scores = set()
     for _ in range(4):
         d *= -1j
         neigh = pos + d
-        if 0 > neigh.real or neigh.real >= width or 0 > neigh.imag or neigh.imag >= height:
+        if neigh not in top_map:
             continue
         if top_map[neigh]["height"] == target_height:
             sc = [(pos, x) for x in top_map[neigh]["score"]]
@@ -50,34 +45,26 @@ def get_neigh_trails(
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    width = len(data)
-    height = len(data[0])
     top_map = to_map(data)
     for d in reversed(range(10)):
-        for x in range(width):
-            for y in range(height):
-                pos = x + 1j * y
-                if d == 9 and top_map[pos]["height"] == d:
-                    top_map[pos]["score"].add(pos)
-                    continue
-                if top_map[pos]["height"] == d:
-                    top_map[pos]["score"].update(get_neigh_score(top_map, pos, width, height))
+        for pos, v in top_map.items():
+            if d == 9 and v["height"] == d:
+                v["score"].add(pos)
+                continue
+            if v["height"] == d:
+                v["score"].update(get_neigh_score(top_map, pos))
     return sum(len(x["score"]) for x in top_map.values() if x["height"] == 0)
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    width = len(data)
-    height = len(data[0])
     top_map = to_map(data)
     for d in reversed(range(10)):
-        for x in range(width):
-            for y in range(height):
-                pos = x + 1j * y
-                if d == 9 and top_map[pos]["height"] == d:
-                    top_map[pos]["score"].add(pos)
-                    continue
-                if top_map[pos]["height"] == d:
-                    top_map[pos]["score"].update(get_neigh_trails(top_map, pos, width, height))
+        for pos, v in top_map.items():
+            if d == 9 and v["height"] == d:
+                v["score"].add(pos)
+                continue
+            if v["height"] == d:
+                v["score"].update(get_neigh_trails(top_map, pos))
     return sum([len(x["score"]) for x in top_map.values() if x["height"] == 0])
 
 
@@ -107,4 +94,4 @@ def main(test: bool = False):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()

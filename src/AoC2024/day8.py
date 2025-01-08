@@ -4,15 +4,15 @@ from itertools import combinations
 from src.utils import Day
 import sys
 import logging
+from src.utils.Grids import data_to_grid
+from string import printable
 
 logger = logging.getLogger("AoC")
 
 
 def to_grid(data: list[str]) -> dict[str, list[complex]]:
     d = {}
-    for char, pos in [(c, x + 1j * y) for y, line in enumerate(reversed(data)) for x, c in enumerate(line)]:
-        if char == ".":
-            continue
+    for pos, char in data_to_grid(data, char_to_keep=printable.replace(".", "")).items():
         if char in d:
             d[char].append(pos)
         else:
@@ -87,4 +87,4 @@ def main(test: bool = False):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()

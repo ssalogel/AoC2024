@@ -4,21 +4,20 @@ from time import perf_counter
 from src.utils import Day
 import sys
 import logging
+from src.utils.Grids import get_neighbors4
 
 logger = logging.getLogger("AoC")
 from heapq import heappush, heappop
 
 
-def djikstra(grid: dict[complex, str], width, length) -> dict[complex, int]:
+def djikstra(grid: dict[complex, str]) -> dict[complex, int]:
     count = 0
     heap = [(0, count, 0)]
     costs = dict([(x, inf) for x in grid if grid[x] != "#"])
     costs[0] = 0
-    directions = [1, 1j, -1, -1j]
     while heap:
         cost, _, curr_pos = heappop(heap)
-        for direction in directions:
-            next_pos = curr_pos + direction
+        for next_pos in get_neighbors4(curr_pos):
             next_cost = cost + 1
             if next_pos in grid and grid[next_pos] != "#" and next_cost < costs[next_pos]:
                 costs[next_pos] = next_cost
@@ -35,7 +34,7 @@ def part_one(data: list[str], width, length, safe) -> Union[str, int]:
             break
         grid[pos] = "#"
 
-    return djikstra(grid, width, length)[target]
+    return djikstra(grid)[target]
 
 
 def part_two(data: list[str], width, length, safe) -> Union[str, int]:
@@ -54,14 +53,14 @@ def part_two(data: list[str], width, length, safe) -> Union[str, int]:
         test_grid = grid.copy()
         for pos in blocks[last_working : test_stop + 1]:
             test_grid[pos] = "#"
-        costs = djikstra(test_grid, width, length)
+        costs = djikstra(test_grid)
         if costs[target] != inf:
             last_working = test_stop
             grid = test_grid
         else:
             first_blocking = test_stop
-
-    return blocks[first_blocking]
+    blocker = blocks[first_blocking]
+    return f"{int(blocker.real)},{int(blocker.imag)}"
 
 
 def main(test: bool = False):
@@ -111,4 +110,4 @@ def main(test: bool = False):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()

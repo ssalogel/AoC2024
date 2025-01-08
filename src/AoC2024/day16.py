@@ -4,14 +4,10 @@ from time import perf_counter
 from src.utils import Day
 import sys
 import logging
-
+from src.utils.Grids import data_to_grid, get_neighbors4
 logger = logging.getLogger("AoC")
 from heapq import heappop, heappush
 from math import inf
-
-
-def data_to_map(data: list[str]) -> dict[complex, str]:
-    return dict([(x + y * 1j, c) for y, line in enumerate(reversed(data)) for x, c in enumerate(line)])
 
 
 def get_all_path(data: list[str]):
@@ -77,19 +73,17 @@ def djikstra(grid: dict[complex, str], start: complex):
 
 
 def build_neigh_map(data: list[str]) -> tuple[dict[complex, list[complex]], complex, complex]:
-    grid = data_to_map(data)
+    grid = data_to_grid(data)
     nei_grid = defaultdict(list)
     start = end = 0
-    for j, row in enumerate(reversed(data)):
-        for i, char in enumerate(row):
-            pos = i + j * 1j
-            if char == "S":
-                start = pos
-            if char == "E":
-                end = pos
-            for nei in [pos + 1, pos - 1, pos + 1j, pos - 1j]:
-                if grid[pos] != "#":
-                    nei_grid[pos].append(nei)
+    for pos, char in grid.items():
+        if char == "S":
+            start = pos
+        if char == "E":
+            end = pos
+        for nei in get_neighbors4(pos):
+            if grid[pos] != "#":
+                nei_grid[pos].append(nei)
     return nei_grid, start, end
 
 
@@ -132,7 +126,7 @@ def explore(start, end, nei_grid, direction) -> int:
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    grid = data_to_map(data)
+    grid = data_to_grid(data)
     reindeer = target = 0
     for pos, c in grid.items():
         if c == "S":
