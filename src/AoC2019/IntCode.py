@@ -2,11 +2,15 @@ from collections import deque
 from enum import Enum
 from typing import Iterable
 
+# Day 2 and 5
+
 
 class State(Enum):
     READY = 0
     WAIT_INPUT = 1
     WAIT_OUTPUT = 2
+    DONE = 3
+
 
 class OP(Enum):
     ADD = 1
@@ -18,9 +22,11 @@ class OP(Enum):
     LT = 7
     EQ = 8
 
+
 class MODE(Enum):
     INDIRECT = 0
     IMMEDIATE = 1
+
 
 class IntCode:
     def __init__(self, code: list[int]):
@@ -35,23 +41,31 @@ class IntCode:
         self.inp.append(inp)
         if self.state == State.WAIT_INPUT:
             self.state = State.READY
+        return self
 
     def add_inputs(self, inputs: Iterable[int]):
         self.inp.extend(inputs)
         if self.state == State.WAIT_INPUT:
             self.state = State.READY
+        return self
 
-
-    def get_param(self, pos: int, mode: MODE) -> int:
+    def _get_param(self, pos: int, mode: MODE) -> int:
         match mode:
             case MODE.INDIRECT:
                 return self.code[self.code[pos]]
             case MODE.IMMEDIATE:
                 return self.code[pos]
 
+    def reset(self):
+        self.code = self.og_code.copy()
+        self.pc = 0
+        self.state = State.READY
+        return self
+
     def resume(self):
         self.state = State.READY
         self.run_until_end()
+        return self
 
     def run_until_end(self) -> "IntCode":
         while self.code[self.pc] != 99:
@@ -63,36 +77,36 @@ class IntCode:
 
             match op:
                 case OP.ADD:
-                    p1 = self.get_param(self.pc + 1, mode_1)
-                    p2 = self.get_param(self.pc + 2, mode_2)
+                    p1 = self._get_param(self.pc + 1, mode_1)
+                    p2 = self._get_param(self.pc + 2, mode_2)
                     if mode_3 == MODE.INDIRECT:
                         self.code[self.code[self.pc + 3]] = p1 + p2
                     else:
                         raise NotImplementedError
                     self.pc += 4
                 case OP.MUL:
-                    p1 = self.get_param(self.pc + 1, mode_1)
-                    p2 = self.get_param(self.pc + 2, mode_2)
+                    p1 = self._get_param(self.pc + 1, mode_1)
+                    p2 = self._get_param(self.pc + 2, mode_2)
                     if mode_3 == MODE.INDIRECT:
                         self.code[self.code[self.pc + 3]] = p1 * p2
                     else:
                         raise NotImplementedError
                     self.pc += 4
                 case OP.NZJMP:
-                    p1 = self.get_param(self.pc + 1, mode_1)
-                    p2 = self.get_param(self.pc + 2, mode_2)
+                    p1 = self._get_param(self.pc + 1, mode_1)
+                    p2 = self._get_param(self.pc + 2, mode_2)
                     self.pc += 3
                     if p1 != 0:
                         self.pc = p2
                 case OP.ZJMP:
-                    p1 = self.get_param(self.pc + 1, mode_1)
-                    p2 = self.get_param(self.pc + 2, mode_2)
+                    p1 = self._get_param(self.pc + 1, mode_1)
+                    p2 = self._get_param(self.pc + 2, mode_2)
                     self.pc += 3
                     if p1 == 0:
                         self.pc = p2
                 case OP.LT:
-                    p1 = self.get_param(self.pc + 1, mode_1)
-                    p2 = self.get_param(self.pc + 2, mode_2)
+                    p1 = self._get_param(self.pc + 1, mode_1)
+                    p2 = self._get_param(self.pc + 2, mode_2)
                     if mode_3 == MODE.INDIRECT:
                         self.code[self.code[self.pc + 3]] = int(p1 < p2)
                     else:
@@ -100,8 +114,8 @@ class IntCode:
                     self.pc += 4
 
                 case OP.EQ:
-                    p1 = self.get_param(self.pc + 1, mode_1)
-                    p2 = self.get_param(self.pc + 2, mode_2)
+                    p1 = self._get_param(self.pc + 1, mode_1)
+                    p2 = self._get_param(self.pc + 2, mode_2)
                     if mode_3 == MODE.INDIRECT:
                         self.code[self.code[self.pc + 3]] = int(p1 == p2)
                     else:
@@ -118,11 +132,14 @@ class IntCode:
                         raise NotImplementedError
                     self.pc += 2
                 case OP.OUTPUT:
-                    self.state = State.WAIT_OUTPUT
-                    p1 = self.get_param(self.pc + 1, mode_1)
+                    p1 = self._get_param(self.pc + 1, mode_1)
                     self.output.append(p1)
                     self.pc += 2
-                    break
                 case _:
                     raise NotImplementedError
+        else:
+            self.state = State.DONE
         return self
+
+    def __repr__(self):
+        return f"{self.state}, in:{self.inp}, out:{self.output}"
