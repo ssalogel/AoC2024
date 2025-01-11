@@ -1,4 +1,4 @@
-from collections import deque
+from collections import deque, defaultdict
 from enum import Enum
 from typing import Iterable
 
@@ -21,21 +21,25 @@ class OP(Enum):
     ZJMP = 6
     LT = 7
     EQ = 8
+    BASE = 9
 
 
 class MODE(Enum):
     INDIRECT = 0
     IMMEDIATE = 1
+    RELATIVE = 2
 
 
 class IntCode:
     def __init__(self, code: list[int]):
-        self.og_code = code.copy()
-        self.code = code.copy()
+        self.og_code: dict[int, int] = defaultdict(lambda: 0)
+        self.og_code.update((ix, v) for ix,v in enumerate(code))
+        self.code = self.og_code.copy()
         self.pc = 0
         self.state = State.READY
         self.inp = deque()
         self.output = deque()
+        self.base = 0
 
     def add_input(self, inp: int):
         self.inp.append(inp)
@@ -55,11 +59,14 @@ class IntCode:
                 return self.code[self.code[pos]]
             case MODE.IMMEDIATE:
                 return self.code[pos]
+            case MODE.RELATIVE:
+                return self.code[pos + self.base]
 
     def reset(self):
         self.code = self.og_code.copy()
         self.pc = 0
         self.state = State.READY
+        self.base = 0
         return self
 
     def resume(self):
@@ -121,6 +128,11 @@ class IntCode:
                     else:
                         raise NotImplementedError
                     self.pc += 4
+
+                case OP.BASE:
+                    p1 = self._get_param(self.pc + 1, mode_1)
+                    self.base += p1
+                    self.pc += 2
 
                 case OP.INPUT:
                     if not self.inp:
