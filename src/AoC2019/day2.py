@@ -19,14 +19,15 @@ def part_one(data: list[str]) -> Union[str, int]:
 
 def part_two(data: list[str]) -> Union[str, int]:
     code = list(map(int, data[0].split(",")))
+    comp = IntCode(code)
     for a in range(100):
         for b in range(100):
-            code[1] = a
-            code[2] = b
-            comp = IntCode(code).run_until_end()
+            comp.code[1] = a
+            comp.code[2] = b
+            comp.run_until_end()
             if comp.code[0] == 19690720:
                 return 100 * a + b
-
+            comp.reset()
 
 def main(test: bool = False):
     test_case_1 = """1,9,10,3,2,3,11,0,99,30,40,50"""
