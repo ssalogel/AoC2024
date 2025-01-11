@@ -60,7 +60,7 @@ class IntCode:
             case MODE.IMMEDIATE:
                 return self.code[pos]
             case MODE.RELATIVE:
-                return self.code[pos + self.base]
+                return self.code[self.code[pos] + self.base]
 
     def reset(self):
         self.code = self.og_code.copy()
