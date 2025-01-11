@@ -88,6 +88,8 @@ class IntCode:
                     p2 = self._get_param(self.pc + 2, mode_2)
                     if mode_3 == MODE.INDIRECT:
                         self.code[self.code[self.pc + 3]] = p1 + p2
+                    elif mode_3 == MODE.RELATIVE:
+                        self.code[self.code[self.pc + 3] + self.base] = p1 + p2
                     else:
                         raise NotImplementedError
                     self.pc += 4
@@ -96,6 +98,9 @@ class IntCode:
                     p2 = self._get_param(self.pc + 2, mode_2)
                     if mode_3 == MODE.INDIRECT:
                         self.code[self.code[self.pc + 3]] = p1 * p2
+                    elif mode_3 == MODE.RELATIVE:
+                        self.code[self.code[self.pc + 3] + self.base] = p1 * p2
+
                     else:
                         raise NotImplementedError
                     self.pc += 4
@@ -116,6 +121,8 @@ class IntCode:
                     p2 = self._get_param(self.pc + 2, mode_2)
                     if mode_3 == MODE.INDIRECT:
                         self.code[self.code[self.pc + 3]] = int(p1 < p2)
+                    elif mode_3 == MODE.RELATIVE:
+                        self.code[self.code[self.pc + 3] + self.base] = int(p1 < p2)
                     else:
                         raise NotImplementedError
                     self.pc += 4
@@ -125,6 +132,8 @@ class IntCode:
                     p2 = self._get_param(self.pc + 2, mode_2)
                     if mode_3 == MODE.INDIRECT:
                         self.code[self.code[self.pc + 3]] = int(p1 == p2)
+                    elif mode_3 == MODE.RELATIVE:
+                        self.code[self.code[self.pc + 3] + self.base] = int(p1 == p2)
                     else:
                         raise NotImplementedError
                     self.pc += 4
@@ -140,6 +149,8 @@ class IntCode:
                         break
                     if mode_1 == MODE.INDIRECT:
                         self.code[self.code[self.pc + 1]] = self.inp.popleft()
+                    elif mode_1 == MODE.RELATIVE:
+                        self.code[self.code[self.pc + 1] + self.base] = self.inp.popleft()
                     else:
                         raise NotImplementedError
                     self.pc += 2
