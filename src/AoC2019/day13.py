@@ -31,12 +31,12 @@ def part_two(data: list[str]) -> Union[str, int]:
             x, y, tile = comp.output.popleft(), comp.output.popleft(), comp.output.popleft()
             screen[(x, y)] = tile
             if tile == 4:
-                ball = (x, y)
+                ball = x
             if tile == 3:
-                paddle = (x, y)
-        if ball[0] > paddle[0]:
+                paddle = x
+        if ball > paddle:
             comp.add_input(1)
-        elif ball[0] < paddle[0]:
+        elif ball < paddle:
             comp.add_input(-1)
         else:
             comp.add_input(0)
