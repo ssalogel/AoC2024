@@ -88,7 +88,7 @@ def get_all_costs(grid: dict[complex, Any], allowed_moves: list[Any], start: com
         cost, _, curr_pos = heappop(heap)
         for next_pos in get_neighbors4(curr_pos):
             next_cost = cost + 1
-            if next_pos in grid and grid[next_pos] != "#" and next_cost < costs[next_pos]:
+            if next_pos in grid and grid[next_pos] in allowed_moves and next_cost < costs[next_pos]:
                 costs[next_pos] = next_cost
                 count += 1
                 heappush(heap, (next_cost, count, next_pos))
