@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import Union
 from time import perf_counter
 
-from src.AoC2019.IntCode import IntCode, State
+from src.utils.IntCode import IntCode, State
 from src.utils import Day
 import sys
 import logging

@@ -3,7 +3,7 @@ from time import perf_counter
 from src.utils import Day
 import sys
 import logging
-from IntCode import IntCode
+from src.utils.IntCode import IntCode
 
 logger = logging.getLogger("AoC")
 

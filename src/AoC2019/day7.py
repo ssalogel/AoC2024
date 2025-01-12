@@ -1,9 +1,9 @@
-from typing import Union, Iterable
+from typing import Union
 from time import perf_counter
 from src.utils import Day
 import sys
 import logging
-from IntCode import IntCode, State
+from src.utils.IntCode import IntCode, State
 from itertools import permutations
 
 
