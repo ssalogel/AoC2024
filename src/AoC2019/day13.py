@@ -15,7 +15,7 @@ def part_one(data: list[str]) -> Union[str, int]:
     grid = {}
     while comp.output:
         x, y, tile = comp.output.popleft(), comp.output.popleft(), comp.output.popleft()
-        grid[(x,y)] = tile
+        grid[(x, y)] = tile
     return sum(v == 2 for v in grid.values())
 
 
@@ -23,8 +23,8 @@ def part_two(data: list[str]) -> Union[str, int]:
     comp = IntCode([int(d) for d in data[0].split(",")])
     comp.code[0] = 2
     screen = {}
-    ball = (0,0)
-    paddle = (0,0)
+    ball = (0, 0)
+    paddle = (0, 0)
     while comp.state != State.DONE:
         comp.run_until_end()
         while comp.output:
@@ -42,6 +42,7 @@ def part_two(data: list[str]) -> Union[str, int]:
             comp.add_input(0)
 
     return screen[(-1, 0)]
+
 
 def main(test: bool = False):
     test_case_1 = """"""
