@@ -33,7 +33,7 @@ class MODE(Enum):
 class IntCode:
     def __init__(self, code: list[int]):
         self.og_code: dict[int, int] = defaultdict(lambda: 0)
-        self.og_code.update((ix, v) for ix,v in enumerate(code))
+        self.og_code.update((ix, v) for ix, v in enumerate(code))
         self.code = self.og_code.copy()
         self.pc = 0
         self.state = State.READY

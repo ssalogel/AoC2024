@@ -29,6 +29,7 @@ def part_two(data: list[str]) -> Union[str, int]:
                 return 100 * a + b
             comp.reset()
 
+
 def main(test: bool = False):
     test_case_1 = """1,9,10,3,2,3,11,0,99,30,40,50"""
 
