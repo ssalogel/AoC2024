@@ -1,5 +1,7 @@
 from typing import Union
 from time import perf_counter
+
+from src.AoC2019.IntCode import IntCode, State
 from src.utils import Day
 import sys
 import logging
@@ -8,12 +10,38 @@ logger = logging.getLogger("AoC")
 
 
 def part_one(data: list[str]) -> Union[str, int]:
-    return data
+    comp = IntCode([int(d) for d in data[0].split(",")])
+    comp.run_until_end()
+    grid = {}
+    while comp.output:
+        x, y, tile = comp.output.popleft(), comp.output.popleft(), comp.output.popleft()
+        grid[(x,y)] = tile
+    return sum(v == 2 for v in grid.values())
 
 
 def part_two(data: list[str]) -> Union[str, int]:
-    pass
+    comp = IntCode([int(d) for d in data[0].split(",")])
+    comp.code[0] = 2
+    screen = {}
+    ball = (0,0)
+    paddle = (0,0)
+    while comp.state != State.DONE:
+        comp.run_until_end()
+        while comp.output:
+            x, y, tile = comp.output.popleft(), comp.output.popleft(), comp.output.popleft()
+            screen[(x, y)] = tile
+            if tile == 4:
+                ball = (x, y)
+            if tile == 3:
+                paddle = (x, y)
+        if ball[0] > paddle[0]:
+            comp.add_input(1)
+        elif ball[0] < paddle[0]:
+            comp.add_input(-1)
+        else:
+            comp.add_input(0)
 
+    return screen[(-1, 0)]
 
 def main(test: bool = False):
     test_case_1 = """"""
@@ -36,4 +64,4 @@ def main(test: bool = False):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET, stream=sys.stdout)
-    main(True)
+    main()
