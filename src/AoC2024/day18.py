@@ -9,7 +9,6 @@ from src.utils.Grids import get_all_costs
 logger = logging.getLogger("AoC")
 
 
-
 def part_one(data: list[str], width, length, safe) -> Union[str, int]:
     target = (width - 1) + (length - 1) * 1j
     grid = {x + y * 1j: "." for x in range(width) for y in range(length)}
