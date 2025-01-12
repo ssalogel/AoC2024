@@ -79,10 +79,10 @@ def get_self_and_neighs_multi_dim(pos: Position) -> list[Position]:
     yield from product(*ranges)
 
 
-def get_all_costs(grid: dict[complex, str], start: complex = 0) -> dict[complex, int]:
+def get_all_costs(grid: dict[complex, Any], allowed_moves: list[Any], start: complex = 0) -> dict[complex, int]:
     count = 0
     heap = [(0, count, complex(0))]
-    costs = dict([(x, inf) for x in grid if grid[x] != "#"])
+    costs = dict([(x, inf) for x in grid if grid[x] in allowed_moves])
     costs[start] = 0
     while heap:
         cost, _, curr_pos = heappop(heap)

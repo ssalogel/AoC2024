@@ -18,7 +18,7 @@ def part_one(data: list[str], width, length, safe) -> Union[str, int]:
             break
         grid[pos] = "#"
 
-    return get_all_costs(grid)[target]
+    return get_all_costs(grid, ["."])[target]
 
 
 def part_two(data: list[str], width, length, safe) -> Union[str, int]:
@@ -37,7 +37,7 @@ def part_two(data: list[str], width, length, safe) -> Union[str, int]:
         test_grid = grid.copy()
         for pos in blocks[last_working : test_stop + 1]:
             test_grid[pos] = "#"
-        costs = get_all_costs(test_grid)
+        costs = get_all_costs(test_grid, ["."])
         if costs[target] != inf:
             last_working = test_stop
             grid = test_grid
